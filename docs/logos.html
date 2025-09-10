@@ -1,3 +1,4 @@
+
 <style>
   .logo-left, .logo-right {
     position: absolute;
@@ -51,6 +52,26 @@
       <sup>3</sup> University of Miami, Cooperative Institute for Marine and Atmospheric Studies
     </span>
   </div>
+ </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Select all anchor tags
+  document.querySelectorAll('a').forEach(function(link) {
+    // Only set target=_blank for external links (optional)
+    if (
+      link.href &&
+      link.hostname &&
+      link.hostname !== window.location.hostname
+    ) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener');
+    }
+  });
+});
+</script>
+
 
 
 
