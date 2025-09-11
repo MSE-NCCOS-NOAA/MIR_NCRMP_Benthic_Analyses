@@ -9,9 +9,8 @@ csl: special.csl
 
 format:
   html:
-    theme: cosmo
+    theme: lumen
     toc: true
-    toc-depth: 2
     number-sections: true
     code-fold: true
     code-tools: true
@@ -45,9 +44,9 @@ execute:
 
 [Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Cheeca Rocks, Eastern Dry Rocks, Horseshoe Reef, Looe Key, Newfound Harbor, and Sombrero Reef. Across these reefs, M:IR aims to restore coral cover to at least 25% -- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
 
-These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, and geographic distribution. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations. Such monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining coral cover, as restoration \'success\' encompasses a range of ecological and management metrics rathern than a single measurement (e.g., coral cover) [@Goergen2020]. In addition to monitoring within the M:IR reefs, it is also important to assess the surrounding reefs in the Florida Keys to interpret restoration progress. The National Coral Reef Monitoring Program (NCRMP), which conducts standardized reef assessments across the Florida Keys, provides a solid framework for comparison. To align with this program, the M:IR team applied NCRMP survey methodology within its Iconic Sites in 2022 and 2024 to complement NCRMP surveys in the outer FKNMS. These surveys focused on shallow (\<30 m), hard-bottom reef habitats, using a stratified-random, one-stage design within 50 m × 50 m grid cells to ensure representative sampling across depth and rugosity strata [@Ault2021]. The survey design ensures that survey sites are allocated by cross-shelf zone, rugosity type, and depth strata, with sites distributed around the Florida Keys from nearshore to offshore to a maximum depth of 30 m. The NCRMP sample grid was spatially joined with the seven distinct M:IR zones (Figure 1). Survey sites were proportionally allocated within NCRMP strata to maintain consistent representation across habitats. \
+These Iconic Reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, and geographic distribution. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations. Such monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining coral cover, as restoration 'success' encompasses a range of ecological and management metrics rathern than a single measurement (e.g., coral cover) [@Goergen2020]. In addition to monitoring within the M:IR reefs, it is also important to assess the surrounding reefs in the Florida Keys to interpret restoration progress. The National Coral Reef Monitoring Program (NCRMP), which conducts standardized reef assessments across the Florida Keys, provides a solid framework for comparison. To align with this program, the M:IR team applied NCRMP survey methodology within its Iconic Reefs in 2022 and 2024 to complement NCRMP surveys in the outer FKNMS. These surveys focused on shallow (\<30 m), hard-bottom reef habitats, using a stratified-random, one-stage design within 50 m × 50 m grid cells to ensure representative sampling across depth and rugosity strata [@Ault2021]. The survey design ensures that survey sites are allocated by cross-shelf zone, rugosity type, and depth strata, with sites distributed around the Florida Keys from nearshore to offshore to a maximum depth of 30 m. The NCRMP sample grid was spatially joined with the seven distinct M:IR zones (Figure 1). Survey sites were proportionally allocated within NCRMP strata to maintain consistent representation across habitats. \
 
-![Figure 1: Map of the Florida Keys showing the sites of Mission:Iconic Reefs](../Project/images/MIR%20Map.png){fig-align="center"}
+![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR%20Map.png){fig-align="center"}
 
 ```{r libraries, include = FALSE}
 
@@ -93,7 +92,7 @@ MIR_species <- c( "ACR CERV", "ACR PALM", "COL NATA", "DEN CYLI",
 
 Corals and benthic communities were monitored using two different NCRMP surveys: the Benthic Community Assessment survey and the Coral Demographics survey (NOAA CRCP 2022a, 2022b, 2024a, 2024b). The Benthic Community Assessment survey includes: 1) benthic cover (%) estimates along a 15-m transect with a line point intercept method, 2) presence/absence of Endangered Species Act (ESA)-listed coral species [@NMFS2014], 3) abundance of key macroinvertebrates, and 4) reef rugosity measurements within a 15 m x 2 m belt-transect area (NOAA CRCP 2022a, 2024b). At the same site, coral demographics were surveyed within a 10 m x 1 m belt-transect area (NOAA CRCP 2022b, 2024b). NCRMP coral demographic survey data were combined with complementarily allocated survey data from Florida Fish and Wildlife Conservation Commission's Disturbance Response Monitoring ([DRM](https://coraldrm.org/)). In all coral demographics surveys, all live coral colonies ≧ 4 cm were counted, identified to species, measured to the nearest centimeter, and estimates were made of the proportion per colony of any present mortality (recent or old), disease (absent, present: slow, fast), and/or bleaching (none, total, partial, paling). Only live coral colonies were included in the survey; dead colonies with 100% mortality were not surveyed (e.g., colonies killed by coral disease). Juvenile corals (\< 4 cm) were reported for species richness only and were not included in counts, size measurements, or estimates of condition (NOAA CRCP 2022b); in 2024, juveniles of select coral species were counted (NOAA CRCP 2024b). In 2024, NCRMP benthic surveys also included large area imaging (LAI) collected at most survey sites; analyses of these LAI data are in progress and not presented here.
 
-To allow for direct comparisons of benthic communities inside the M:IR restoration areas with control, non-restored areas across the Florida Keys reefs, the NCRMP dataset was restricted to strata types and depth zones (0-12 m) found within M:IR sites. Statistical comparisons were conducted using a two-tailed t-test between M:IR and NCRMP estimates for each survey year (2022 or 2024) and between years for M:IR and NCRMP. This report focuses on coral populations and benthic community metrics; a separate report can be found for fish population assessments [@Blondeau2025].
+To allow for direct comparisons of benthic communities inside the M:IR restoration areas with control, non-restored areas across the Florida Keys reefs, the NCRMP dataset was restricted to strata types and depth zones (0-12 m) found within M:IR sites. Statistical comparisons were conducted using a two-tailed t-test between M:IR and NCRMP estimates for each survey year (2022 or 2024) and between years for M:IR and NCRMP. This report focuses on coral populations and benthic community metrics; a separate [report](https://rob-harper.github.io/MissionIconicReef) can be found for fish population assessments [@Blondeau2025].
 
 NCRMP analyses scripts for corals and benthic communities are open source and available at [NCRMP Benthic R package](https://github.com/MSE-NCCOS-NOAA/NCRMP_benthics) [@Groves2025].
 
@@ -399,7 +398,7 @@ cat(":::\n")  # close tabset container
 
 ## Coral Demography
 
-Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR\'s goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites (`!Citation!`). Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).  
+Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR's goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites (`!Citation!`). Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).  
 
 The following table summarizes the number of observations across all stratum and survey years of each focal species and identifies the most abundant species encountered.
 
@@ -470,7 +469,7 @@ sjPlot::tab_df(
 
 ### Focal Species
 
-The stratified random surveys are designed to optimize sampling efficiency and provide high precision estimates of coral population metrics at relatively low sample sizes [@Smith2021].  The effectiveness of restoration can be quantified by comparison of these metrics between M:IR sites and similar habitats outside these restoration areas. 
+The stratified random surveys are designed to optimize sampling efficiency and provide high precision estimates of coral population metrics at relatively low sample sizes [@Smith2011].  The effectiveness of restoration can be quantified by comparison of these metrics between M:IR sites and similar habitats outside these restoration areas. 
 
 The following figures for these metrics are grouped by each focal species. Significant statistical differences using a two-tailed t-test are indicated for differences between survey years (2022 vs. 2024) and between areas (M:IR vs. NCRMP) for density, old mortality, and mean colony size.
 
@@ -913,10 +912,10 @@ a <- a %>%
     ggplot(aes(x = avDen, y = SPECIES_NAME, group = interaction(SPECIES_CD, analysis_group), color = analysis_group)) +
     geom_point(	position = position_dodge(width = 0.3)) + 
     geom_errorbar(aes(xmin = avDen - SE_avDen, xmax = avDen + SE_avDen), width = 0.1, 	position = position_dodge(width = 0.3)) +
-    labs(y = "Species", x = expression("Density (col/m"^2*")")) +
+    labs(y = "Species", x = expression(bold("Density (col/m"^2*")"))) +
     theme_Publication(base_size = 10) +
     facet_grid(~YEAR) +
-    scale_x_continuous(expand = expansion(mult = c(0, 0))) +
+    scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
     scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')")))+
     theme(strip.text = element_text(face = "italic"))+
     scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "NCRMP + DRM"), name = "") +
@@ -958,7 +957,7 @@ b <- b %>%
     labs(y = "Species", x = "Old Mortality (%)") +
     theme_Publication(base_size = 10) +
     facet_grid(~YEAR) +
-    scale_x_continuous(expand = expansion(mult = c(0, 0))) +
+    scale_x_continuous(expand = expansion(mult = c(0, .08))) +
     theme(strip.text = element_text(face = "italic"))+
     scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "NCRMP + DRM"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none") +
@@ -1005,7 +1004,8 @@ c <- c %>% filter(SPECIES_CD %in% spec_unq)
     labs(y = "Species", x = "Mean Colony Size (cm)") +
     theme_Publication(base_size = 10) +
     facet_grid(~YEAR) +
-    scale_x_continuous(expand = expansion(mult = c(0, 0))) +
+    scale_x_continuous(limits = c(0, NA), breaks = scales::pretty_breaks(n = 6),
+  expand = expansion(mult = c(0, 0.08))) +
     theme(strip.text = element_text(face = "italic"))+
     scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "Outside"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none") +
