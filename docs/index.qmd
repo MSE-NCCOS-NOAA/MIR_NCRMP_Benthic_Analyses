@@ -6,6 +6,7 @@ reference-location: section
 reference-section-title: Bibliography
 nocite: "@NOAA2022a; @NOAA2022b; @NOAA2024a; @NOAA2024b"
 csl: special.csl 
+render-all: true
 
 format:
   html:
@@ -28,10 +29,28 @@ format:
           }
         </style>
   pdf:
-    documentclass: article
     fig-cap-location: bottom
-    includes:
-      in_header: custom_header.tex
+    author: "Nicole Krampitz, Julia Mateski, and Dione Swanson"
+    mainfont: ArialMT
+    toc: true
+    toc-title: |
+      \clearpage
+      Table of Contents
+    fig-numbering: false
+    table-caption: false
+    include-in-header:
+      text: |
+        \usepackage{graphicx}
+        \usepackage{titling}
+        \pretitle{%
+        \begin{center}
+        \includegraphics[width=6cm]{mir_logo.png}\\[1em]
+        \includegraphics[width=4cm]{noaa_crcp.jpg}\\[1em]
+        \LARGE
+        }
+        \usepackage{caption}
+        \captionsetup[figure]{labelformat=empty}
+        \captionsetup[table]{labelformat=empty}
 editor: visual
 execute:
   freeze: auto
@@ -39,6 +58,8 @@ execute:
   warning: false
   message: false
 ---
+
+\newpage
 
 ## Introduction
 
@@ -81,6 +102,10 @@ source("../Project/R Scripts/QuadPanel.R")
 # source("R Scripts/total_bleach_code.R")
 source("../Project/R Scripts/dis_ble_prev_ratio_est.R")
 
+
+##code for terminal rendering:
+#cd ~/Downloads/MIR-Krampitz/docs
+#quarto render index.qmd
 ```
 
 ```{r MIR species, echo = FALSE}
@@ -101,14 +126,14 @@ NCRMP analyses scripts for corals and benthic communities are open source and av
 In 2022, a total of 584 surveys occurred (Table 1) across 403 sites [@Viehman2023]. In 2024, 771 surveys occurred across 542 sites [@GroveInPrep].
 
 ```{r results='asis', echo=FALSE}
-TableCaption <- "<div style='font-size:1.15em; margin-bottom:0.5em; text-align: center;'>Table 1. Number of demographic (Demo) and benthic community assessment (BCA) surveys completed by M:IR, NCRMP, and DRM in 2022 and 2024.</div>"
-
+TableCaption <- "<div style='font-size:0.9em; color: #666666; margin-bottom:0.5em; text-align: center;'>
+Table 1. Number of demographic (Demo) and benthic community assessment (BCA) surveys completed by M:IR, NCRMP, and DRM in 2022 and 2024. </div>"
 if (knitr::is_html_output()) {
   cat(TableCaption)
   source("../Project/R Scripts/html_summary_table.R")
 } else if (knitr::is_latex_output()) {
   cat(TableCaption)
-  cat("![Summary Table](../Project/images/Proper_Table.png){ width=100% }")
+  cat("![Number of demographic (Demo) and benthic community assessment (BCA) surveys completed by M:IR, NCRMP, and DRM in 2022 and 2024](../Project/images/Proper_Table.png){ width=100% }")
 }
 ```
 
@@ -140,29 +165,12 @@ table <- NCRMP_MIR %>%
     select(`Study area`, STRAT, description, `2022`, `2024`) %>%
     arrange(`Study area`, STRAT)
 
-#conditional statement for rendering in both HTML and PDF
-if (knitr::is_html_output()) {
-  DT::datatable(table,
-    class = "cell-border stripe",
-    rownames = FALSE,
-    colnames = c("Study Area", "Strata Name", "Strata Description", "2022 Sample Number", "2024 Sample Number"),
-    caption = "Table 1. Number of Benthic Commnity Assesement (BCA) sites sampled inside and outside M:IR areas in each stratum.",
-    options = list(
-      columnDefs = list(list(className = 'dt-center', targets = "_all")),
-      info = FALSE,
-      paging = FALSE,
-      searching = FALSE
-    )
-  )}
 name <- c("<b>Study Area</b>", "<b>Strata Name</b>", "<b>Strat Description</b>", "<b>2022 Sample Number</b>", "<b>2024 Sample Number</b>")
-
-invisible(table)
 ```
 
-```{r create benthic cover table, echo = FALSE}
+```{r HTML create benthic cover table, echo = FALSE}
 table <- table %>% ungroup() %>%
   mutate(across(everything(), ~ ifelse(is.na(.), "--", .)))
-
 
 sjPlot::tab_df(
   table,
@@ -172,9 +180,10 @@ sjPlot::tab_df(
   alternate.rows = TRUE,
   col.header = name,
     CSS = list(
-    css.caption = "font-weight: normal;") 
+    css.caption = "font-weight: normal;",
+    css.tdata = c(rep("", ncol(table) - 2), "text-align: center;", "text-align: center;")
+    )
 )
-
 ```
 
 ### Coral Demography
@@ -208,23 +217,6 @@ table_2 <- DRM %>%
   )) %>%
     select(`Study area`, STRAT, description, `2022`, `2024`) %>%
     arrange(`Study area`, STRAT)
-
-if (knitr::is_html_output()) {
-  DT::datatable(table_2,
-    class = "cell-border stripe",
-    rownames = FALSE,
-    colnames = c("Study Area", "Strata Name", "Strata Description", "2022 Sample Number", "2024 Sample Number"),
-    caption = "Table 3. The number of coral demographic sites sampled inside and outside M:IR areas in each stratum (includes DRM data).",
-    options = list(
-      columnDefs = list(list(className = 'dt-center', targets = "_all")),
-      info = FALSE,
-      paging = FALSE,
-      searching = FALSE
-    )
-  )}
-
-invisible(table2)
-
 ```
 
 ```{r print coral demo table, echo = FALSE}
@@ -240,8 +232,8 @@ sjPlot::tab_df(
   col.header = name,
   CSS = list(
     css.firsttablecol = "width: 140px;", # widen first column
-    css.th = "font-style: normal; font-weight: bold;", 
-    css.caption = "font-weight: normal;") # title/description not bold
+    css.caption = "font-weight: normal;",
+    css.tdata = c(rep("", ncol(table) - 2), "text-align: center;", "text-align: center;"))
 )
 ```
 
@@ -376,12 +368,13 @@ sig_cover <- sig_cover %>%
 
 ```
 
-```{r loop through cover plots and tab results, fig.cap="Figure 2.  Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP). The category ‘Other’ comprises Cyanobacteria, Palythoa, <i>Millepora</i>, Seagrass, Bare Substrate, and other miscellaneous organisms.", fig.width=9, results='asis', fig.asp=0.8, echo=FALSE}
-# Loop through categories and print plots
-cat("::: {.panel-tabset}\n\n")  # open tabset container
-
+```{r COVER HTML LOOP, fig.cap="Figure 2.  Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP). The category ‘Other’ comprises Cyanobacteria, Palythoa, <i>Millepora</i>, Seagrass, Bare Substrate, and other miscellaneous organisms.", fig.width=9, results='asis', fig.asp=0.8, echo=FALSE}
 # Define manual tab order
 ordered_categories <- c("Hard Coral", "Macroalgae", "Octocoral", "Sponge", "Turf Algae", "Crustose Coralline Algae (CCA)", "Ramicrusta", "Other")
+
+if (knitr::is_html_output()){
+# Loop through categories and print plots
+cat("::: {.panel-tabset}\n\n")  # open tabset container
 
 walk(ordered_categories, function(cat) {
   cat("### ", cat, " {.tab-pane}\n\n", sep = "")
@@ -392,13 +385,29 @@ walk(ordered_categories, function(cat) {
 })
 
 cat(":::\n")  # close tabset container
+}
+```
 
+```{r COVER PDF, fig.cap = "Figures 2a-f. Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP).", fig.width= 15, fig.height = 10, fig.asp = 1.2, echo = FALSE}
 
+if (knitr::is_latex_output()) {
+  ##Put two graphs per page
+  for (i in seq(1, length(ordered_categories), by = 2)) {
+    plots_to_print <- purrr::map(ordered_categories[i:min(i+1, length(ordered_categories))],
+                                 ~ make_plot(new_dat, .x))
+    combined <- patchwork::wrap_plots(plots_to_print, ncol = 1)
+
+    # Print with increased height
+    print(combined + patchwork::plot_layout(heights = rep(2, length(plots_to_print))))
+
+    cat("\n\n")
+  }
+}
 ```
 
 ## Coral Demography
 
-Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR's goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites (`!Citation!`). Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).  
+Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR's goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites. Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).  
 
 The following table summarizes the number of observations across all stratum and survey years of each focal species and identifies the most abundant species encountered.
 
@@ -462,9 +471,11 @@ sjPlot::tab_df(
     "<b>Colonies in 2022</b>",
     "<b>Colonies in 2024</b>"
   ),
-    CSS = list(
-       css.caption = "font-weight: normal;",
-       css.table = "margin-left: auto; margin-right: auto; width: 90%;") )
+CSS = list(
+  css.caption = "font-weight: normal;",
+  css.table   = "margin-left: auto; margin-right: auto; width: 90%;",
+  css.tdata   = c(rep("", ncol(table) - 2), "text-align: center;", "text-align: center;")
+))
 ```
 
 ### Focal Species
@@ -874,22 +885,47 @@ lst_clean <- compact(plots_list)
 
 ```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (MIR and NCRMP + DRM). A black (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance between years for the given group (i.e., M:IR or NCRMP).", results='asis', fig.width=9, fig.asp=1.2}
 
-cat("::: {.panel-tabset}\n\n")  # open tabset container
+###
+if (knitr::is_html_output()){
 
-walk(seq_along(lst_clean), function(i) {
-  plot <- lst_clean[[i]]
-  species_code <- names(lst_clean)[[i]]
+# Open the tabset container
+cat("::: {.panel-tabset}\n\n")
 
+# Loop through each species in lst_clean
+purrr::walk(names(lst_clean), function(species_code) {
+  
+  # # Skip if the plot is NULL
+  # if (is.null(lst_clean[[species_code]])) return()
+  
+  # Get species name for the tab heading
   species_name <- names %>%
-    filter(SPECIES_CD == species_code) %>%
-    distinct(SPECIES_NAME) %>%
-    pull(SPECIES_NAME)
-
-  cat("### <em>", species_name, "</em> {.tab-pane}\n\n")
-  print(plot)
+    dplyr::filter(SPECIES_CD == species_code) %>%
+    dplyr::distinct(SPECIES_NAME) %>%
+    dplyr::pull(SPECIES_NAME)
+  
+  # Print the tab heading
+  cat("### *", species_name, "* {.tab-pane}\n\n", sep = "")
+  
+  # Print the patchwork plot
+  print(lst_clean[[species_code]])
+  
+  # Optional spacing between tabs
+  cat("\n\n")
 })
 
-cat("\n:::\n")  # close tabset container
+# Close the tabset container
+cat(":::\n")
+
+} else if (knitr::is_latex_output()) {
+  
+  # PDF: just print the plots, one per page
+  purrr::walk(lst_clean, function(p) {
+    if (is.null(p)) return()
+    print(p)
+    cat("\n\n")
+  })
+  
+}
 
 ```
 
@@ -906,7 +942,6 @@ a <- left_join(a, names %>% distinct(), by = "SPECIES_CD") %>%
 a <- a %>%
   mutate(SPECIES_NAME = 
            fct_reorder(SPECIES_NAME, if_else(is.na(avDen), 0, avDen), .desc = FALSE))
-
 
   plt1 <- a %>%  
     ggplot(aes(x = avDen, y = SPECIES_NAME, group = interaction(SPECIES_CD, analysis_group), color = analysis_group)) +
@@ -1025,29 +1060,25 @@ c <- c %>% filter(SPECIES_CD %in% spec_unq)
 
 ### Bleaching Estimates
 
-\*\* warning these estimates are not correct \*\*
-
-```{r  bleach 2022, echo = FALSE}
-
-# Set path to data files
-data_2022_path <- "data/FK2022_NCRMP_DRM_MIR_corsz_ARallv2.csv"
-
+```{r  bleaching setup, echo = FALSE}
 MIR_species <- c("ACR PALM", "ACR CERV", "COL NATA", "DEN CYLI", "DIC STOK", "DIP LABY", "EUS FAST", "MEA MEAN", "PSE CLIV", "PSE STRI", "MON CAVE")
-
-#Script works for the actual value but CI are not exact
-# tmp <- disease_bleach_prevalence_ratio_est(data_2022_path, 2022) %>%
-#   filter(PV_TYPE == "Bleach_All") %>%
-#   left_join(., names)
 
 names_clean <- names %>%
   select(SPECIES_CD, SPECIES_NAME) %>%
   distinct(SPECIES_CD, .keep_all = TRUE)
 
-tmp_ble_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Ball_dom.csv") %>%
-  left_join(., names_clean, by = "SPECIES_CD")
+##Old proportion estimates, will update when dione gives new ones
+# tmp_ble_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Ball_dom.csv") %>% left_join(., names_clean, by = "SPECIES_CD")
 
-tmp <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Ball_dom.csv") %>%
-    left_join(names_clean, by = "SPECIES_CD")
+# tmp <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Ball_dom.csv") %>%
+#     left_join(names_clean, by = "SPECIES_CD")
+
+### Prevalence estimates given by Dione in place of above ones
+tmp_ble_2022 <- read_csv("../Project/data/cor_prev_fk22_MIR_NCRMP.csv") %>%  left_join(., names_clean, by = "SPECIES_CD") %>%
+  dplyr::rename(PVbar = percent_Bprev) ## change the column name for same code later
+tmp <- read_csv("../Project/data/cor_prev_fk24_MIR_NCRMP.csv") %>% left_join(names_clean, by = "SPECIES_CD") %>%
+  dplyr::rename(PVbar = percent_Bprev) ## change the column name for same code later
+
 
 tmp_ble <- full_join(tmp_ble_2022, tmp)
 
@@ -1091,11 +1122,11 @@ plt_bleach_MIR <- tmp_filtered %>%
     pattern_density = .4          # fully patterned
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
-  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Proportion of Colonies Bleached", y = "Coral Species", fill = "") +
+#  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
+    labs(x = "Bleaching Prevalence (%)", y = "Coral Species", fill = "") +
   scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
   theme_Publication(base_size = 10) +
- coord_cartesian(xlim = c(0, 10), clip = "off") +
+ coord_cartesian(xlim = c(0, 80), clip = "off") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
     theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1122,12 +1153,12 @@ plt_bleach_NCRMP <- tmp_filtered %>%
     pattern_density = .4          # fully patterned
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
-  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
+ # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
  # facet_wrap(~analysis_group) +
-    labs(x = "Proportion of Colonies Bleached", y = "Coral Species", fill = "") +
+    labs(x = "Bleaching Prevalence (%)", y = "Coral Species", fill = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
-  coord_cartesian(xlim = c(0, 10), clip = "off") +
+  coord_cartesian(xlim = c(0, 80), clip = "off") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
     theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1144,7 +1175,7 @@ plt_bleach_NCRMP <- tmp_filtered %>%
 
 ```
 
-```{r bleaching, fig.cap = "Figure 7. Species-specific bleaching frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.4, echo = FALSE}
+```{r bleaching, fig.cap = "Figure 7. Species-specific bleaching frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.4, echo = FALSE}
 
 # Combine the two plots side-by-side
 final_plot <- (plt_bleach_MIR + plt_bleach_NCRMP) +
@@ -1156,13 +1187,9 @@ print(final_plot)
 
 ### Disease Estimates
 
-\*\* warning these estimates are not correct \*\*
-
 ```{r disease, echo= FALSE}
 
 # Set path to data files
-data_2022_path <- "../Project/data/FK2022_NCRMP_DRM_MIR_corsz_ARallv2.csv"
-
 MIR_species <- c("ACR PALM", "ACR CERV", "COL NATA", "DEN CYLI", "DIC STOK", "DIP LABY", "EUS FAST", "MEA MEAN", "PSE CLIV", "PSE STRI", "MON CAVE")
 
 
@@ -1170,13 +1197,17 @@ names_clean <- names %>%
   select(SPECIES_CD, SPECIES_NAME) %>%
   distinct(SPECIES_CD, .keep_all = TRUE)
 
-tmp_dis_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Dall_dom.csv") %>%
-    left_join(names_clean, by = "SPECIES_CD")
+#old proportional estimates, will update when new ones come in from Dione
+# tmp_dis_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Dall_dom.csv") %>%
+#     left_join(names_clean, by = "SPECIES_CD")
+# 
+# tmp_dis_2024 <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Dall_dom.csv") %>%
+#     left_join(names_clean, by = "SPECIES_CD")
 
-tmp_dis_2024 <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Dall_dom.csv") %>%
-    left_join(names_clean, by = "SPECIES_CD")
+#Use prevalence dataset and keep names the same for following code
+tmp_dis <- tmp_ble %>% select(-PVbar) %>% dplyr::rename(PVbar = percent_Dprev)
 
-tmp_dis <- full_join(tmp_dis_2022, tmp_dis_2024)
+# tmp_dis <- full_join(tmp_dis_2022, tmp_dis_2024)
 
 top_species <- tmp_dis %>%
   group_by(SPECIES_CD) %>%
@@ -1219,12 +1250,12 @@ plt_dis_MIR <- tmp_filtered %>%
     pattern_density = .4          
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
-  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
-                position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Proportion of Colonies Diseased", y = "Coral Species", fill = "") +
+ # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
+ #               position = position_dodge(width = 0.8), width = 0.1) +
+    labs(x = "Disease Prevalence", y = "Coral Species", fill = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
-  coord_cartesian(xlim = c(0, 2), clip = "off") +
+  coord_cartesian(xlim = c(0, 10), clip = "off") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
    theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1251,12 +1282,12 @@ plt_dis_NCRMP <- tmp_filtered %>%
     pattern_density = .4          
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
-  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
-                position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Proportion of Colonies Diseased", y = "Coral Species", fill = "") +
+ # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
+ #               position = position_dodge(width = 0.8), width = 0.1) +
+    labs(x = "Disease Prevalence", y = "Coral Species", fill = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
-  coord_cartesian(xlim = c(0, 2), clip = "off") +
+  coord_cartesian(xlim = c(0, 10), clip = "off") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
     theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1291,7 +1322,7 @@ plt_dis_NCRMP <- tmp_filtered %>%
 
 </br>
 
-***Data Sources:***
+**Data Sources:**
 
 NOAA National Centers for Coastal Ocean Science; NOAA Southeast Fisheries Science Center (2024). National Coral Reef Monitoring Program: Assessment of coral reef benthic communities in Florida \[2022, 2024\]. NOAA National Centers for Environmental Information. Dataset. doi: [10.7289/v5xw4h4z](https://doi.org/10.7289/v5xw4h4z)
 

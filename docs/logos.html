@@ -1,17 +1,31 @@
 
 <style>
-  .logo-left, .logo-right {
-    position: absolute;
-    top: 4rem;
-    background-color: white;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    z-index: 10;
+  .logo-left {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 10;
   }
 
   .logo-left {
     left: 1rem;  /* pull inward from left margin */
+  }
+  .logo-right {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 10;
   }
 
   .logo-right {
@@ -19,13 +33,20 @@
   }
 
   .logo-left img {
-    height: 80px;
+    height: 110px;
     display: block;
   }
   .logo-right img {
     height: 75px; /* same height for consistency */
     display: block;
   }
+
+/* Center the Quarto title block */
+.quarto-title .title {
+  color: white;
+}
+
+
 </style>
 
 <!-- NOAA / CRCP logo on the left -->
@@ -70,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 });
+
 </script>
 
 
