@@ -65,6 +65,8 @@ execute:
 ## Introduction
 
 [Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Cheeca Rocks, Eastern Dry Rocks, Horseshoe Reef, Looe Key, Newfound Harbor, and Sombrero Reef (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sitesal-- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
+
+
 ![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR%20Map.png){fig-align="center"}
 
 These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, geographic distribution, and cultural significance. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations at M:IR sites using a range of metrics, such as coral cover, size structure, mortality prevalence, and diversity.  Such multi-metric monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining a healthy coral reef, as restoration ‘success’ encompasses a range of ecological and management metrics rather than a single measurement (e.g., coral cover) [@Goergen2020].
@@ -127,6 +129,7 @@ NCRMP analyses scripts for corals and benthic communities are open source and av
 
 ## Benthic Survey Effort
 In 2022, a total of 584 surveys occurred (Table 1) across 403 sites [@Viehman2023]. In 2024, 771 surveys occurred across 542 sites [@GroveInPrep]. 
+
 ```{r Benthic Survey Summaries, results='asis', echo=FALSE}
 ###### HTML VERSION ############
 if (knitr::is_html_output()) {
@@ -973,7 +976,7 @@ lst_clean <- compact(plots_list)
 
 <!-- Tabs for HTML output -->
 
-```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (MIR and NCRMP + DRM). A black (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance between years for the given group (i.e., M:IR or NCRMP).", results='asis', fig.width=9, fig.asp=1.2}
+```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance between years for the given group (i.e., M:IR or NCRMP).", results='asis', fig.width=9, fig.asp=1.1}
 
 ###
 if (knitr::is_html_output()){
@@ -1021,7 +1024,7 @@ cat(":::\n")
 
 ### Coral Density
 
-```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colones/m<sup>2</sup>) outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.2, echo = FALSE}
+```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colones/m<sup>2</sup>) outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 ###Adding species names and starring MIR species
 a <- left_join(a, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
@@ -1062,7 +1065,7 @@ a <- a %>%
 
 ### Old Mortality
 
-```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality (± SEM) by coral species outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.2, echo = FALSE}
+```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality (± SEM) by coral species outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 ###Adding species names and starring MIR species
 b <- left_join(b, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
@@ -1096,13 +1099,13 @@ b <- b %>%
     ) 
   
   
-  print(plt1)
+  plt1
 
 ```
 
 ### Coral Size
 
-```{r overall Max_Dim, fig.cap = "Figure 6. Maximum diameter (cm) ± SEM by coral species outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.2, echo = FALSE}
+```{r overall Max_Dim, fig.cap = "Figure 6. Maximum diameter (cm) ± SEM by coral species outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 
 spec_unq <- unique(b$SPECIES_CD)
 
@@ -1265,7 +1268,7 @@ plt_bleach_NCRMP <- tmp_filtered %>%
 
 ```
 
-```{r bleaching, fig.cap = "Figure 7. Species-specific bleaching frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.4, echo = FALSE}
+```{r bleaching, fig.cap = "Figure 7. Species-specific bleaching frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1, echo = FALSE}
 
 # Combine the two plots side-by-side
 final_plot <- (plt_bleach_MIR + plt_bleach_NCRMP) +
@@ -1393,7 +1396,7 @@ plt_dis_NCRMP <- tmp_filtered %>%
   ggtitle("NCRMP + DRM")
 ```
 
-```{r, echo = FALSE, fig.cap = "Figure 8. Species-specific disease frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.4}
+```{r, echo = FALSE, fig.cap = "Figure 8. Species-specific disease frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1}
 
 # Combine the two plots side-by-side
 (final_plot <- (plt_dis_MIR + plt_dis_NCRMP) +
