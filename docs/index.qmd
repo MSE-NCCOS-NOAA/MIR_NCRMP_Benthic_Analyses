@@ -1,6 +1,7 @@
 ---
 title: "Mission: Iconic Reefs and National Coral Reef Monitoring Program Benthic Analyses"
 subtitle: "Summary Report for 2022 and 2024"
+date: "`r format(Sys.time(), '%d %B %Y')`"
 bibliography: References.bib
 reference-location: section
 reference-section-title: Bibliography
@@ -64,14 +65,14 @@ execute:
 
 ## Introduction
 
-[Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Cheeca Rocks, Eastern Dry Rocks, Horseshoe Reef, Looe Key, Newfound Harbor, and Sombrero Reef (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sitesal-- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
+[Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Cheeca Rocks, Eastern Dry Rocks, Horseshoe Reef, Looe Key, Newfound Harbor, and Sombrero Reef (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sites -- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
 
 
 ![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR%20Map.png){fig-align="center"}
 
 These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, geographic distribution, and cultural significance. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations at M:IR sites using a range of metrics, such as coral cover, size structure, mortality prevalence, and diversity.  Such multi-metric monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining a healthy coral reef, as restoration ‘success’ encompasses a range of ecological and management metrics rather than a single measurement (e.g., coral cover) [@Goergen2020].
 
-In addition to monitoring within the M:IR reefs, it is also important to assess the surrounding reefs in the Florida Keys to interpret restoration progress. The National Coral Reef Monitoring Program (NCRMP), which conducts standardized reef assessments across the Florida Keys on a biennial basis, provides a solid framework for comparison. To align with this program, the M:IR team applied NCRMP survey methodology within its Iconic Sites in 2022 and 2024 to complement NCRMP surveys. These surveys focused on shallow (\<30 m), hard-bottom reef habitats, using a stratified-random, one-stage design within 50 m × 50 m grid cells to ensure representative sampling across depth and rugosity strata [@Ault2021]. The survey design ensures that survey sites are allocated by cross-shelf zone, rugosity type, and depth strata, with sites distributed around the Florida Keys from nearshore to offshore to a maximum depth of 30 m. The NCRMP sample grid was spatially joined with the seven distinct M:IR zones (Figure 1). Survey sites were proportionally allocated within NCRMP strata to maintain consistent representation across habitats. \
+In addition to monitoring within the M:IR reefs, it is also important to assess the surrounding reefs in the Florida Keys to interpret restoration progress. The National Coral Reef Monitoring Program (NCRMP), which conducts standardized reef assessments across the Florida Keys on a biennial basis, provides a solid framework for comparison. To align with this program, the M:IR team applied NCRMP survey methodology within its Iconic Sites in 2022 and 2024 to complement NCRMP surveys. These surveys focused on shallow (\<30 m), hard-bottom reef habitats, using a stratified-random, one-stage design within 50 m × 50 m grid cells to ensure representative sampling across depth and rugosity strata [@Ault2021]. The survey design ensures that survey sites are allocated by cross-shelf zone, rugosity type, and depth strata, with sites distributed around the Florida Keys from nearshore to offshore to a maximum depth of 30 m. The NCRMP sample grid was spatially joined with the seven distinct M:IR zones (Figure 1). Survey sites were proportionally allocated within NCRMP strata to maintain consistent representation across habitats. 
 
 
 
@@ -435,7 +436,7 @@ sig_cover <- sig_cover %>%
 
 ```
 
-```{r COVER HTML LOOP, fig.cap="Figure 2.  Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP). The category ‘Other’ comprises Cyanobacteria, Palythoa, <i>Millepora</i>, Seagrass, Bare Substrate, and other miscellaneous organisms.", fig.width=9, results='asis', fig.asp=0.8, echo=FALSE}
+```{r COVER HTML LOOP, fig.cap="Figure 2.  Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP). The category ‘Other’ comprises Cyanobacteria, Palythoa, <i>Millepora</i>, Seagrass, bare substrate, and other miscellaneous organisms.", fig.width=9, results='asis', fig.asp=0.8, echo=FALSE}
 # Define manual tab order
 ordered_categories <- c("Hard Coral", "Macroalgae", "Octocoral", "Sponge", "Turf Algae", "Crustose Coralline Algae (CCA)", "Ramicrusta", "Other")
 
@@ -1216,7 +1217,7 @@ plt_bleach_MIR <- tmp_filtered %>%
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
 #  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Bleaching Prevalence (%)", y = "Coral Species", fill = "") +
+    labs(x = "Bleaching Prevalence (%)", y = "Species", fill = "") +
   scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
   theme_Publication(base_size = 10) +
  coord_cartesian(xlim = c(0, 80), clip = "off") +
@@ -1248,7 +1249,7 @@ plt_bleach_NCRMP <- tmp_filtered %>%
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
  # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
  # facet_wrap(~analysis_group) +
-    labs(x = "Bleaching Prevalence (%)", y = "Coral Species", fill = "") +
+    labs(x = "Bleaching Prevalence (%)", y = "Species", fill = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
   coord_cartesian(xlim = c(0, 80), clip = "off") +
