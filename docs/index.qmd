@@ -31,7 +31,7 @@ format:
         </style>
   pdf:
     fig-cap-location: bottom
-    author: "Nicole Krampitz, Julia Mateski, and Dione Swanson"
+    author: "Nicole Krampitz, Dione Swanson, Julia Mateski, Lexie Sturm, and Shay Viehman"
     mainfont: Arial
     toc: true
     toc-title: |
@@ -737,6 +737,12 @@ midpoints <- den_filtered %>%
     y_mid = 1.02 * mean(avDen, na.rm = TRUE)) %>%
     dplyr::rename(REGION = analysis_group) #for joining purposes
 
+##Special case for MMEA since there is overlap on the stars (they're in the same location). Easiest to rewrite 
+if (species == "MEA MEAN") {
+  midpoints <- tibble(
+  REGION = c("MIR_GRP", "NCRMP_GRP"),
+  y_mid  = c(0.0009, 0.00187))}
+
 ## For between groups find the y min to go on the plot
 ymin <- den_filtered %>%
   group_by(SPECIES_CD) %>%
@@ -754,6 +760,7 @@ plt1 <- plt1 +
   geom_text(data = sig_cover %>% filter (is.na(REGION)),
             aes(x = YEAR, y = y_min), label = "+",
             inherit.aes = FALSE, size = 6, color = "black") +
+
 ### Significance BETWEEN YEARS on graph
   geom_text(data = sig_cover %>% filter (is.na(YEAR)),
             aes(x = 2023, y = y_mid, color = REGION), label = "*",
@@ -998,7 +1005,7 @@ lst_clean <- compact(plots_list)
 
 <!-- Tabs for HTML output -->
 
-```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black plus (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance between years for the given group (i.e., M:IR or NCRMP). Note: Axis bounds vary by species", results='asis', fig.width=9, fig.asp=1.1}
+```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black plus (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance between years for the given group (i.e., M:IR or NCRMP). Note: Axis bounds vary by species.", results='asis', fig.width=9, fig.asp=1.1}
 
 ###
 if (knitr::is_html_output()){
