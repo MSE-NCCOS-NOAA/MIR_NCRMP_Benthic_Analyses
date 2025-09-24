@@ -68,7 +68,7 @@ execute:
 [Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Cheeca Rocks, Eastern Dry Rocks, Horseshoe Reef, Looe Key, Newfound Harbor, and Sombrero Reef (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sites -- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
 
 
-![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR%20Map.png){fig-align="center"}
+![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR_Map_New.png){fig-align="center"}
 
 These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, geographic distribution, and cultural significance. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations at M:IR sites using a range of metrics, such as coral cover, size structure, mortality prevalence, and diversity.  Such multi-metric monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining a healthy coral reef, as restoration ‘success’ encompasses a range of ecological and management metrics rather than a single measurement (e.g., coral cover) [@Goergen2020].
 
@@ -375,7 +375,7 @@ plot <- df_filtered %>%
   ggplot(aes(x = as.integer(YEAR), y = avCvr *100, group = interaction(COV_CAT_A, REGION), color = REGION)) +
   geom_point(size = 2, position = position_dodge(width =  0.06)) +
   geom_line(size = 1, position = position_dodge(width =  0.06)) +
-  geom_errorbar(aes(ymin = avCvr*100 - SE*100, ymax = avCvr*100 + SE*100),
+  geom_errorbar(aes(ymin = pmax(0, avCvr * 100 - SE * 100), ymax = avCvr * 100 + SE * 100),
                 width = 0.1,
                 position = position_dodge(width =  0.06)) +
   scale_color_manual(
@@ -386,6 +386,7 @@ plot <- df_filtered %>%
   labs(x = "Year", y = "Cover (%)", title = category ) +
  # facet_wrap(~ COV_CAT_A) + ##This was when we filtered for just hard corals/macroalgae. If we output as a pdf, might be necessary to bring back
   scale_x_continuous(breaks = c(2022, 2024)) +
+  coord_cartesian(ylim = c(-1, NA)) +
   #scale_y_continuous(, labels = scales::percent_format(accuracy = 2) ) +
   theme_Publication(base_size = 20) +
   theme(
@@ -399,6 +400,11 @@ plot <- df_filtered %>%
     legend.title = element_blank()
   ) + guides(color = guide_legend(override.aes = list(size = 4)))
 
+##Conditional Formatting
+if (category == "Ramicrusta"){
+  plot <- plot + coord_cartesian(ylim = c(-0, 3)) 
+}
+
 ##Adding the significance labels
 #This may take a fair amount of tweaking ##
 sig_cover <- sig %>%
@@ -411,10 +417,10 @@ midpoints <- df_filtered %>%
   summarise(
     y_mid = 1.02 * mean(avCvr * 100, na.rm = TRUE))
 
-## For between groups find the y min to go on the plot
+# For between groups find the y min to go on the plot
 ymin <- df_filtered %>%
   group_by(COV_CAT_A) %>%
-  summarise(y_min = 85 * (min(avCvr)- max(SE))) %>%#this hopefully gets a nice plot minimum just below wherever it ends
+  summarise(y_min = 85 * (min(avCvr)- max(SE))) %>% # this hopefully gets a nice plot minimum just below wherever it ends
   dplyr::rename(variable = COV_CAT_A) #for joining purposes
 
 # Add them to the significance table
@@ -426,7 +432,7 @@ sig_cover <- sig_cover %>%
 (plot + 
 ### Significance BETWEEN GROUPS on X axis
   geom_text(data = sig_cover %>% filter (is.na(REGION)),
-            aes(x = YEAR, y = y_min), label = "+",
+            aes(x = YEAR, y = -0.5), label = "+",
             inherit.aes = FALSE, size = 12, color = "black") +
 ### Significance BETWEEN YEARS on graph
   geom_text(data = sig_cover %>% filter (is.na(YEAR)),
@@ -456,7 +462,7 @@ cat(":::\n")  # close tabset container
 }
 ```
 
-```{r COVER PDF, fig.cap = "Figures 2a-f. Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP).", fig.width= 15, fig.height = 10, fig.asp = 1.2, echo = FALSE, fig.pos='H', results = 'asis'}
+```{r COVER PDF, fig.cap = "Figures 2a-f. Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black plus (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP).", fig.width= 15, fig.height = 10, fig.asp = 1.2, echo = FALSE, fig.pos='H', results = 'asis'}
 
 if (knitr::is_latex_output()) {
   ##Put two graphs per page
@@ -720,7 +726,6 @@ dodge_width <- 0.05
   
 
 ##Adding the significance labels
-#This may take a fair amount of tweaking ##
 sig_cover <- sig %>%
   filter(metric == "density") %>%
   filter(variable == species)
@@ -755,6 +760,13 @@ plt1 <- plt1 +
             inherit.aes = FALSE, size = 10)
   
 ### MORTALITY PLOT ##########
+#conditional APAL because only one year, add an NA for plotting aesthetics
+if (species == "ACR PALM"){
+b_filtered <- b_filtered %>%
+  bind_rows(
+    tibble(YEAR = 2024, SPECIES_CD = "ACR PALM", avMortOld = NA, SE_avMortOld = NA, analysis_group = "MIR_GRP"))
+}
+
   plt2 <- b_filtered %>%
     ggplot(aes(x = YEAR, y = avMortOld, group = analysis_group, color = analysis_group)) +
     geom_point(position = position_dodge(dodge_width)) +
@@ -767,6 +779,8 @@ plt1 <- plt1 +
     scale_x_continuous(breaks = c(2022, 2024)) +
     scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "Outside"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none")
+
+#
 
 ##Adding the significance labels
 #This may take a fair amount of tweaking ##
@@ -804,7 +818,14 @@ plt2 <- plt2 +
   geom_text(data = sig_cover %>% filter (is.na(YEAR)),
             aes(x = YEARS, y = y_mid, color = REGION), label = "*",
             inherit.aes = FALSE, size = 10)
-  
+
+
+##### COLONY SIZE GRAPH ########
+if (species == "ACR PALM"){
+c_filtered <- c_filtered %>%
+  bind_rows(
+    tibble(YEAR = 2024, SPECIES_CD = "ACR PALM", avMortOld = NA, SE_avMortOld = NA, analysis_group = "MIR_GRP"))
+}
 
   plt3 <- c_filtered %>%
     ggplot(aes(x = YEAR, y = avMaxdiam, group = analysis_group, color = analysis_group)) +
@@ -977,7 +998,7 @@ lst_clean <- compact(plots_list)
 
 <!-- Tabs for HTML output -->
 
-```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored (*) indicates significance between years for the given group (i.e., M:IR or NCRMP).", results='asis', fig.width=9, fig.asp=1.1}
+```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black plus (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance between years for the given group (i.e., M:IR or NCRMP). Note: Axis bounds vary by species", results='asis', fig.width=9, fig.asp=1.1}
 
 ###
 if (knitr::is_html_output()){
