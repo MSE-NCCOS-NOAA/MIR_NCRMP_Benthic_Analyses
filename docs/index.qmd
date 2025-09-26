@@ -247,10 +247,11 @@ sjPlot::tab_df(
     table_2,
     booktabs = TRUE,
     caption = NULL,  
-    col.names = c("Study Area", "Strata", "Strata Description", "2022", "2024")
+    col.names = c("Study Area", "Strata", "Strata Description", "2022", "2024"),
+    longtable = TRUE
   ) %>%
     kableExtra::kable_styling(
-      latex_options = c("striped", "hold_position"),
+      latex_options = c("striped", "repeat_header"),
       font_size = 10,
       position = "center"
     ) %>%
@@ -291,10 +292,11 @@ sjPlot::tab_df(
     booktabs = TRUE,
     caption = NULL,    # no caption here
     align = c("l", "l", "l", "c", "c"),
-    col.names = c("Study Area", "Strat", "Strat Description", "2022", "2024")
+    col.names = c("Study Area", "Strat", "Strat Description", "2022", "2024"),
+    longtable = TRUE
   ) %>%
     kableExtra::kable_styling(
-      latex_options = c("striped"),
+      latex_options = c("striped", "repeat_header"),
       font_size = 10,
       position = "center"
     ) %>%
@@ -305,6 +307,7 @@ sjPlot::tab_df(
 
 
 \newpage 
+
 ## Benthic Community Composition
 
 Temporal trends in benthic cover of functional groups such as coral and macroalgae cover provide information on changes to the benthic community composition over time.
@@ -462,7 +465,7 @@ cat(":::\n")  # close tabset container
 }
 ```
 
-```{r COVER PDF, fig.cap = "Figures 2a-f. Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black plus (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP).", fig.width= 15, fig.height = 10, fig.asp = 1.2, echo = FALSE, fig.pos='H', results = 'asis'}
+```{r COVER PDF, fig.cap = "Figure 2. Cover estimates for main benthic groups inside and outside M:IR areas for 2022 and 2024. A black plus (+) indicates a significant difference between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance difference between years for the given group (i.e., M:IR or NCRMP).", fig.width= 15, fig.height = 10, fig.asp = 1.02, echo = FALSE, fig.pos='H', results = 'asis'}
 
 if (knitr::is_latex_output()) {
   ##Put two graphs per page
