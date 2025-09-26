@@ -16,7 +16,7 @@ The purpose of this repository is to provide the data, analyses, and figures use
 
 ------------------------------------------------------------------------
 
-## Data {#data}
+## Data 
 
 The data that feed this site include:
 
@@ -31,7 +31,7 @@ When the `index.qmd` file is rendered it will reference these data files to gene
 
 ------------------------------------------------------------------------
 
-## Documents {#documents}
+## Documents
 
 The folder labeled "docs" contains "Index.qmd", a quarto document, which is used to generate both the HTML and the PDF outputs. In this folder, you will also find the bibliography (References.bib) and the html and pdf outputs of the quarto document.
 
