@@ -67,14 +67,11 @@ execute:
 
 [Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Cheeca Rocks, Eastern Dry Rocks, Horseshoe Reef, Looe Key, Newfound Harbor, and Sombrero Reef (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sites -- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
 
-
 ![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR_Map_New.png){fig-align="center"}
 
-These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, geographic distribution, and cultural significance. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations at M:IR sites using a range of metrics, such as coral cover, size structure, mortality prevalence, and diversity.  Such multi-metric monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining a healthy coral reef, as restoration ‘success’ encompasses a range of ecological and management metrics rather than a single measurement (e.g., coral cover) [@Goergen2020].
+These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, geographic distribution, and cultural significance. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations at M:IR sites using a range of metrics, such as coral cover, size structure, mortality prevalence, and diversity. Such multi-metric monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining a healthy coral reef, as restoration 'success' encompasses a range of ecological and management metrics rather than a single measurement (e.g., coral cover) [@Goergen2020].
 
 In addition to monitoring within the M:IR reefs, it is also important to assess the surrounding reefs in the Florida Keys to interpret restoration progress. The National Coral Reef Monitoring Program (NCRMP), which conducts standardized reef assessments across the Florida Keys on a biennial basis, provides a solid framework for comparison. To align with this program, the M:IR team applied NCRMP survey methodology within its Iconic Sites in 2022 and 2024 to complement NCRMP surveys. These surveys focused on shallow (\<30 m), hard-bottom reef habitats, using a stratified-random, one-stage design within 50 m × 50 m grid cells to ensure representative sampling across depth and rugosity strata [@Ault2021]. The survey design ensures that survey sites are allocated by cross-shelf zone, rugosity type, and depth strata, with sites distributed around the Florida Keys from nearshore to offshore to a maximum depth of 30 m. The NCRMP sample grid was spatially joined with the seven distinct M:IR zones (Figure 1). Survey sites were proportionally allocated within NCRMP strata to maintain consistent representation across habitats. 
-
-
 
 ```{r libraries, include = FALSE}
 
@@ -129,7 +126,8 @@ To allow for direct comparisons of benthic communities inside the M:IR restorati
 NCRMP analyses scripts for corals and benthic communities are open source and available at [NCRMP Benthic R package](https://github.com/MSE-NCCOS-NOAA/NCRMP_benthics) [@Groves2025].
 
 ## Benthic Survey Effort
-In 2022, a total of 584 surveys occurred (Table 1) across 403 sites [@Viehman2023]. In 2024, 771 surveys occurred across 542 sites [@GroveInPrep]. 
+
+In 2022, a total of 584 surveys occurred (Table 1) across 403 sites [@Viehman2023]. In 2024, 771 surveys occurred across 542 sites [@GroveInPrep].
 
 ```{r Benthic Survey Summaries, results='asis', echo=FALSE}
 ###### HTML VERSION ############
@@ -153,7 +151,8 @@ Table 1. Number of demographic (Demo) and benthic community assessment (BCA) sur
 ```
 
 ### Coral Demography
-For the purpose of this comparison, surveys were divided into two groups: inside M:IR and outside. Almost all of the inside (M:IR) surveys were completed by the M:IR team; however, if an NCRMP or DRM sample happened to fall within the boundaries of an M:IR iconic reef, it was added to the inside group. The inverse occurred if an M:IR survey happened to fall outside the M:IR boundary. 
+
+For the purpose of this comparison, surveys were divided into two groups: inside M:IR and outside. Almost all of the inside (M:IR) surveys were completed by the M:IR team; however, if an NCRMP or DRM sample happened to fall within the boundaries of an M:IR iconic reef, it was added to the inside group. The inverse occurred if an M:IR survey happened to fall outside the M:IR boundary.
 
 ```{r prepare data for benthic cover table, include = FALSE}
 ##Let's just start with MIR/NCRMP only (benthic cover)
@@ -259,9 +258,10 @@ sjPlot::tab_df(
     print()
 }
 ```
+
 ### Benthic Composition
 
-Disturbance Response Monitoring (DRM) only performs coral demographic surveys (Table 1) and therefore DRM surveys are not included in the summary of Benthic Community Assesement surveys (Table 3). 
+Disturbance Response Monitoring (DRM) only performs coral demographic surveys (Table 1) and therefore DRM surveys are not included in the summary of Benthic Community Assesement surveys (Table 3).
 
 ```{r create benthic cover table, echo = FALSE, results = 'asis'}
 table <- table %>% ungroup() %>%
@@ -305,8 +305,7 @@ sjPlot::tab_df(
 }
 ```
 
-
-\newpage 
+\newpage
 
 ## Benthic Community Composition
 
@@ -484,7 +483,7 @@ if (knitr::is_latex_output()) {
 
 ## Coral Demography
 
-Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR's goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites. Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).  
+Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR's goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites. Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).
 
 The following table summarizes the number of observations across all strata and survey years of each focal species and identifies the most abundant species encountered.
 
@@ -568,7 +567,8 @@ cat("\\textcolor{darkgray}{\\textbf{Table 4.} Number of colonies observed for fo
     final,
     booktabs = TRUE,
     col.names = c("Species", "Colonies in 2022", "Colonies in 2024"),
-    align = c("l", "c", "c")
+    align = c("l", "c", "c"),
+    longtable = TRUE
   ) %>%
     kableExtra::kable_styling(
       latex_options = c("striped", "hold_position"),
@@ -1008,7 +1008,7 @@ lst_clean <- compact(plots_list)
 
 <!-- Tabs for HTML output -->
 
-```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black plus (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance between years for the given group (i.e., M:IR or NCRMP). Note: Axis bounds vary by species.", results='asis', fig.width=9, fig.asp=1.1}
+```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black plus (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance between years for the given group (i.e., M:IR or NCRMP). Note: Y axis bounds vary by species.", results='asis', fig.width=9, fig.asp=1.1}
 
 ###
 if (knitr::is_html_output()){
