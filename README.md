@@ -10,7 +10,7 @@
 
 Welcome to the **Mission Iconic Reef (M:IR) and National Coral Reef Monitoring Program** benthic analysis project.
 
-This site is published at: <https://nkrampitz.github.io/MIR-Krampitz>
+This site is published at: <https://mse-nccos-noaa.github.io/MIR_NCRMP_Benthic_Analyses/>
 
 The purpose of this repository is to provide the data, analyses, and figures used in the above report. Others can adapt the code to produce their own format, or extract additional information from the analyses.
 
