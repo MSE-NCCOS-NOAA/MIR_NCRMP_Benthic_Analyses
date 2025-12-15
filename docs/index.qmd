@@ -1008,7 +1008,7 @@ lst_clean <- compact(plots_list)
 
 <!-- Tabs for HTML output -->
 
-```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black plus (+) indicates a significant difference in cover estimates between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance between years for the given group (i.e., M:IR or NCRMP). Note: Y axis bounds vary by species.", results='asis', fig.width=9, fig.asp=1.1}
+```{r coral-tabyss, echo=FALSE, fig.cap="Figure 3. Coral density, old mortality, colony size, and size frequency distribution for focal M:IR species across sample years (2022 and 2024) and survey types (M:IR and NCRMP + DRM). A black plus (+) indicates a significant difference in estimates (i.e., density, mortality, or size) between groups in that survey year (i.e., 2022 or 2024). A colored asterisk (*) indicates significance between years for the given group (i.e., M:IR or NCRMP). Note: Y axis bounds vary by species.", results='asis', fig.width=9, fig.asp=1.1}
 
 ###
 if (knitr::is_html_output()){
@@ -1056,7 +1056,7 @@ cat(":::\n")
 
 ### Coral Density
 
-```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colonies/m<sup>2</sup>) outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colonies/m<sup>2</sup>) ± SEM outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 ###Adding species names and starring MIR species
 a <- left_join(a, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
@@ -1097,7 +1097,7 @@ a <- a %>%
 
 ### Old Mortality
 
-```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality (± SEM) by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality ± SEM by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 ###Adding species names and starring MIR species
 b <- left_join(b, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
