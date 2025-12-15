@@ -65,11 +65,11 @@ execute:
 
 ## Introduction
 
-[Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Cheeca Rocks, Eastern Dry Rocks, Horseshoe Reef, Looe Key, Newfound Harbor, and Sombrero Reef (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sites -- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
+[Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, academic, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Horseshoe Reef, Cheeca Rocks, Sombrero Reef, Newfound Harbor, Looe Key, and Eastern Dry Rocks (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sites -- an inititaitve unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
 
 ![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR_Map_New.png){fig-align="center"}
 
-These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, geographic distribution, and cultural significance. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations at M:IR sites using a range of metrics, such as coral cover, size structure, mortality prevalence, and diversity. Such multi-metric monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining a healthy coral reef, as restoration 'success' encompasses a range of ecological and management metrics rather than a single measurement (e.g., coral cover) [@Goergen2020].
+These Iconic reefs were selected for restoration due to their diversity in reef types, levels of anthropogenic disturbances, initial coral cover, connectivity to other habitat types, geographic distribution, and cultural significance. Restoration progress at these reefs is informed by ongoing monitoring of coral reef benthic communities and coral populations at M:IR sites using a range of metrics, such as coral cover, size structure, mortality prevalence, and diversity. Such multi-metric monitoring is essential to evaluating whether current restoration practices are effective in establishing and maintaining a healthy coral reef, as restoration 'success' encompasses a range of ecological and management metrics rather than a single measurement (e.g., coral cover) [@Goergen2020].
 
 In addition to monitoring within the M:IR reefs, it is also important to assess the surrounding reefs in the Florida Keys to interpret restoration progress. The National Coral Reef Monitoring Program (NCRMP), which conducts standardized reef assessments across the Florida Keys on a biennial basis, provides a solid framework for comparison. To align with this program, the M:IR team applied NCRMP survey methodology within its Iconic Sites in 2022 and 2024 to complement NCRMP surveys. These surveys focused on shallow (\<30 m), hard-bottom reef habitats, using a stratified-random, one-stage design within 50 m × 50 m grid cells to ensure representative sampling across depth and rugosity strata [@Ault2021]. The survey design ensures that survey sites are allocated by cross-shelf zone, rugosity type, and depth strata, with sites distributed around the Florida Keys from nearshore to offshore to a maximum depth of 30 m. The NCRMP sample grid was spatially joined with the seven distinct M:IR zones (Figure 1). Survey sites were proportionally allocated within NCRMP strata to maintain consistent representation across habitats. 
 
@@ -724,7 +724,7 @@ dodge_width <- 0.05
     theme(strip.text = element_text(face = "italic"))+
     theme(legend.position = "none") + 
     scale_x_continuous(breaks = c(2022, 2024)) +
-    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "Outside"), name = "") +
+    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("M:IR", "Outside"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none")
   
 
@@ -787,7 +787,7 @@ b_filtered <- b_filtered %>%
     theme(strip.text = element_text(face = "italic"))+
     theme(legend.position = "none") + 
     scale_x_continuous(breaks = c(2022, 2024)) +
-    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "Outside"), name = "") +
+    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("M:IR", "Outside"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none")
 
 #
@@ -847,7 +847,7 @@ c_filtered <- c_filtered %>%
     theme(strip.text = element_text(face = "italic"))+
     theme(legend.position = "none") + 
     scale_x_continuous(breaks = c(2022, 2024)) +
-    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "Outside"), name = "") +
+    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("M:IR", "Outside"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none")
   
 ##Adding the significance labels
@@ -1056,7 +1056,7 @@ cat(":::\n")
 
 ### Coral Density
 
-```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colones/m<sup>2</sup>) outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colonies/m<sup>2</sup>) outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 ###Adding species names and starring MIR species
 a <- left_join(a, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
@@ -1078,7 +1078,7 @@ a <- a %>%
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
     scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')")))+
     theme(strip.text = element_text(face = "italic"))+
-    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "NCRMP + DRM"), name = "") +
+    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("M:IR", "NCRMP + DRM"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none") +
     theme(
       strip.text = element_text(size = 14, face = "bold"),
@@ -1097,7 +1097,7 @@ a <- a %>%
 
 ### Old Mortality
 
-```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality (± SEM) by coral species outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality (± SEM) by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 ###Adding species names and starring MIR species
 b <- left_join(b, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
@@ -1119,7 +1119,7 @@ b <- b %>%
     facet_grid(~YEAR) +
     scale_x_continuous(expand = expansion(mult = c(0, .08))) +
     theme(strip.text = element_text(face = "italic"))+
-    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "NCRMP + DRM"), name = "") +
+    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("M:IR", "NCRMP + DRM"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none") +
     theme(
       strip.text = element_text(size = 14, face = "bold"),
@@ -1137,7 +1137,7 @@ b <- b %>%
 
 ### Coral Size
 
-```{r overall Max_Dim, fig.cap = "Figure 6. Maximum diameter (cm) ± SEM by coral species outside (NCRMP and DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Max_Dim, fig.cap = "Figure 6. Maximum diameter (cm) ± SEM by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
 
 spec_unq <- unique(b$SPECIES_CD)
 
@@ -1167,7 +1167,7 @@ c <- c %>% filter(SPECIES_CD %in% spec_unq)
     scale_x_continuous(limits = c(0, NA), breaks = scales::pretty_breaks(n = 6),
   expand = expansion(mult = c(0, 0.08))) +
     theme(strip.text = element_text(face = "italic"))+
-    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("MIR", "Outside"), name = "") +
+    scale_color_manual(values = c("#0072B2", "#D55E00"), labels = c("M:IR", "Outside"), name = "") +
     scale_linetype_manual(values = c("solid", "dashed"), guide = "none") +
     theme(
       strip.text = element_text(size = 14, face = "bold"),
@@ -1229,13 +1229,13 @@ tmp_filtered <- tmp_filtered %>%
     SPECIES_NAME = fct_reorder(SPECIES_NAME, if_else(is.na(PVbar), 0, PVbar), .desc = FALSE),
     YEAR = factor(YEAR, levels = c("2022", "2024")),
     analysis_group = recode(analysis_group,
-                            "MIR_GRP" = "MIR",
+                            "MIR_GRP" = "M:IR",
                             "NCRMP_GRP" = "NCRMP + DRM"))
 
 
 plt_bleach_MIR <- tmp_filtered %>%
   filter(SPECIES_NAME != "NA") %>%
-  filter(analysis_group == "MIR") %>%
+  filter(analysis_group == "M:IR") %>%
   ggplot(aes(x = PVbar, y = SPECIES_NAME, pattern = YEAR, group = rev(YEAR))) +
     ggpattern::geom_col_pattern(
     position = position_dodge(width = 0.8),
@@ -1262,7 +1262,7 @@ plt_bleach_MIR <- tmp_filtered %>%
           legend.text = element_text(size = 10),
           panel.spacing = unit(1, "lines")
         ) +
-  ggtitle("Mission: Iconic Reef")
+  ggtitle("Mission: Iconic Reefs")
 
 plt_bleach_NCRMP <- tmp_filtered %>%
   filter(SPECIES_NAME != "NA") %>%
@@ -1357,13 +1357,13 @@ tmp_filtered <- tmp_filtered %>%
      SPECIES_NAME = fct_reorder(SPECIES_NAME, PVbar, .fun = function(x) max(x, na.rm = TRUE), .desc = FALSE),
     YEAR = factor(YEAR, levels = c("2022", "2024")),
     analysis_group = recode(analysis_group,
-                                 "MIR_GRP" = "MIR",
+                                 "MIR_GRP" = "M:IR",
                                  "NCRMP_GRP" = "NCRMP + DRM"))
 
 
 plt_dis_MIR <- tmp_filtered %>%
   filter(SPECIES_NAME != "NA") %>%
-  filter(analysis_group == "MIR") %>%
+  filter(analysis_group == "M:IR") %>%
   ggplot(aes(x = PVbar, y = SPECIES_NAME, group = rev(YEAR), pattern = YEAR)) +
   ggpattern::geom_col_pattern(
     position = position_dodge(width = 0.8),
@@ -1377,7 +1377,7 @@ plt_dis_MIR <- tmp_filtered %>%
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
  # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
  #               position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Disease Prevalence", y = "Coral Species", fill = "") +
+    labs(x = "Disease Prevalence", y = "Species", fill = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
   coord_cartesian(xlim = c(0, 10), clip = "off") +
@@ -1391,7 +1391,7 @@ plt_dis_MIR <- tmp_filtered %>%
           legend.text = element_text(size = 10),
           panel.spacing = unit(1, "lines")
         ) +
-  ggtitle("Mission: Iconic Reef")
+  ggtitle("Mission: Iconic Reefs")
 
 plt_dis_NCRMP <- tmp_filtered %>%
   filter(SPECIES_NAME != "NA") %>%
@@ -1409,7 +1409,7 @@ plt_dis_NCRMP <- tmp_filtered %>%
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
  # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
  #               position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Disease Prevalence", y = "Coral Species", fill = "") +
+    labs(x = "Disease Prevalence", y = "Species", fill = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
   coord_cartesian(xlim = c(0, 10), clip = "off") +
