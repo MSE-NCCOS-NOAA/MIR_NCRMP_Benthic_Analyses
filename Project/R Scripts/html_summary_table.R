@@ -3,9 +3,7 @@
 ## Due to the nature of the combined headers (M:IR over two columns), formatting of the table is very complicated
 ## Thus this long, descriptive, script was created and seperated for cleaner output in the final quarto
 
-library(gt)
-library(dplyr)
-
+library(tidyverse)
 library(gt)
 library(dplyr)
 
@@ -13,7 +11,8 @@ df <- tribble(
   ~Year,   ~`M:IR Demo`, ~`M:IR BCA`, ~`NCRMP Demo`, ~`NCRMP BCA`, ~`DRM Demo`,
   "2022",  90,           89,          95,            92,           218,
   "2024",  100,          100,         129,           129,          313
-)
+) %>%
+  mutate(Total = rowSums(across(-Year)))
 
 html_table <- df %>%
   gt(rowname_col = "Year") %>%
@@ -21,7 +20,7 @@ html_table <- df %>%
   tab_spanner(label = "NCRMP", columns = c(`NCRMP Demo`, `NCRMP BCA`)) %>%
   tab_spanner(label = "DRM", columns = c(`DRM Demo`)) %>%
   grand_summary_rows(
-    columns = c(`M:IR Demo`, `M:IR BCA`, `NCRMP Demo`, `NCRMP BCA`, `DRM Demo`),
+    columns = c(`M:IR Demo`, `M:IR BCA`, `NCRMP Demo`, `NCRMP BCA`, `DRM Demo`, Total),
     fns = list(
       Total = ~sum(., na.rm = TRUE)
     )
@@ -30,7 +29,7 @@ html_table <- df %>%
   tab_style(
     style = cell_text(align = "center"),
     locations = cells_column_labels(
-      columns = c(`M:IR Demo`, `M:IR BCA`, `NCRMP Demo`, `NCRMP BCA`, `DRM Demo`)
+      columns = c(`M:IR Demo`, `M:IR BCA`, `NCRMP Demo`, `NCRMP BCA`, `DRM Demo`, Total)
     )) %>%
   ## Total Label
    tab_style(
@@ -53,19 +52,37 @@ html_table <- df %>%
     style = cell_text(align = "center"),
     locations = cells_body(columns = everything())
   ) %>%
-
+  # Bold Total column header and numbers
+  tab_style(
+    style = cell_text(weight = "bold", align = "center"),
+    locations = cells_column_labels(columns = Total)
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold", style = "italic", size = px(20), align = "center"),
+    locations = cells_body(columns = Total)) %>%
+  # Double line between total and grand total sum
+  tab_style(
+    style = cell_borders(
+      sides = "left",
+      style = "double",
+      color = "#c8c8c8",
+      weight = px(5)
+    ),
+    locations = cells_grand_summary(columns = Total)
+  ) %>%
   # Bold spanner labels (M:IR, NCRMP, DRM)
   tab_style(
     style = cell_text(weight = "bold", size = px(20)),
     locations = cells_column_spanners()
   ) %>%
+
   cols_label(
     `M:IR Demo` = md("*Demo*"),
     `M:IR BCA` = md("*BCA*"),
     `NCRMP Demo` = md("*Demo*"),
     `NCRMP BCA` = md("*BCA*"),
-    `DRM Demo` = md("*Demo*")
-  ) %>%
+    `DRM Demo` = md("*Demo*"),
+    Total = md("*Total*")) %>%
   # Light grey background ONLY for the Demo/BCA column labels — NOT the stub header
   tab_style(
     style = cell_fill(color = "#f0f0f0"),
