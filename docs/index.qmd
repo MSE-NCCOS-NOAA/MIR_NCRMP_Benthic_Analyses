@@ -105,11 +105,6 @@ source("../Project/R Scripts/QuadPanel.R")
 # source("R Scripts/bleaching_estimates.R")
 # source("R Scripts/total_bleach_code.R")
 source("../Project/R Scripts/dis_ble_prev_ratio_est.R")
-
-
-##code for terminal rendering:
-#cd ~/Downloads/MIR-Krampitz/docs
-#quarto render index.qmd
 ```
 
 ```{r MIR species, echo = FALSE}
@@ -117,7 +112,6 @@ MIR_species <- c( "ACR CERV", "ACR PALM", "COL NATA", "DEN CYLI",
                     "DIC STOK", "DIP LABY", "EUS_ AST", "MEA MEAN", 
                     "ORB ANNU", "ORB FAVE", "ORB FRAN", 
                     "PSE CLIV", "PSE STRI", "MON CAVE" )
-
 ```
 
 Corals and benthic communities were monitored using two different NCRMP surveys: the Benthic Community Assessment survey and the Coral Demographics survey (NOAA CRCP 2022a, 2022b, 2024a, 2024b). The Benthic Community Assessment survey includes: 1) benthic cover (%) estimates along a 15 m transect with a line point intercept method, 2) presence/absence of Endangered Species Act (ESA)-listed coral species [@NMFS2014], 3) abundance of key macroinvertebrates, and 4) reef rugosity measurements within a 15 m x 2 m belt-transect area (NOAA CRCP 2022a, 2024b). At the same site, coral demographics were surveyed within a 10 m x 1 m belt-transect area (NOAA CRCP 2022b, 2024b). NCRMP coral demographic survey data were combined with complementarily allocated survey data from Florida Fish and Wildlife Conservation Commission’s Disturbance Response Monitoring ([DRM](https://coraldrm.org/)) program, which has been collecting coral demographic data focused on coral bleaching and disease since 2005. The NCRMP and DRM programs collaborate by using the same sampling grid and conducting complementary coral demographics surveys, increasing the sample size and spatial coverage in Florida. In all coral demographics surveys, all live coral colonies less than 4 cm were counted, identified to species, measured to the nearest centimeter, and estimates were made of the proportion per colony of any present mortality (recent or old), disease (absent, present: slow, fast), and/or bleaching (none, total, partial, paling). Only live coral colonies were included in the survey; dead colonies with 100% mortality were not surveyed (e.g., colonies killed by coral disease). Juvenile corals (\< 4 cm) were reported for species richness only and were not included in counts, size measurements, or estimates of condition (NOAA CRCP 2022b); in 2024, juveniles of select coral species were counted (NOAA CRCP 2024b). In 2024, NCRMP benthic surveys also included large area imaging (LAI) collected at most survey sites; analyses of these LAI data are in progress and not presented here.
@@ -1092,7 +1086,8 @@ a <- a %>%
       axis.text.y = element_text(size = 11),
       axis.title = element_text(size = 13),
       legend.position = "bottom",
-      legend.text = element_text(size = 10),
+      legend.text = element_text(size = 12.5),
+      legend.key.size = unit(1.4, "lines"),
       panel.spacing = unit(1, "lines")
     ) 
   
@@ -1132,7 +1127,8 @@ b <- b %>%
       axis.text.y = element_text(size = 11),
       axis.title = element_text(size = 13),
       legend.position = "bottom",
-      legend.text = element_text(size = 10),
+      legend.text = element_text(size = 12.5),
+      legend.key.size = unit(1.4, "lines"),
       panel.spacing = unit(1, "lines")
     ) 
   
@@ -1180,7 +1176,8 @@ c <- c %>% filter(SPECIES_CD %in% spec_unq)
       axis.text.y = element_text(size = 11),
       axis.title = element_text(size = 13),
       legend.position = "bottom",
-      legend.text = element_text(size = 10),
+      legend.text = element_text(size = 12.5),
+      legend.key.size = unit(1.4, "lines"),
       panel.spacing = unit(1, "lines")
     ) 
   
@@ -1192,24 +1189,23 @@ c <- c %>% filter(SPECIES_CD %in% spec_unq)
 ### Bleaching Prevalence 
 
 ```{r  bleaching setup, echo = FALSE}
-MIR_species <- c("ACR PALM", "ACR CERV", "COL NATA", "DEN CYLI", "DIC STOK", "DIP LABY", "EUS FAST", "MEA MEAN", "PSE CLIV", "PSE STRI", "MON CAVE")
 
 names_clean <- names %>%
   select(SPECIES_CD, SPECIES_NAME) %>%
   distinct(SPECIES_CD, .keep_all = TRUE)
 
-##Old proportion estimates, will update when dione gives new ones
-# tmp_ble_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Ball_dom.csv") %>% left_join(., names_clean, by = "SPECIES_CD")
+#Read in bleaching prevalence estimates
+tmp_ble_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Ball2_dom.csv") %>%  left_join(., names_clean, by = "SPECIES_CD") %>%
+  dplyr::mutate(PVbar = PVbar * 100,
+                PV_UCI = PV_UCI *100,
+                PV_LCI = PV_LCI * 100)
+  
 
-# tmp <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Ball_dom.csv") %>%
-#     left_join(names_clean, by = "SPECIES_CD")
-
-### Prevalence estimates given by Dione in place of above ones
-tmp_ble_2022 <- read_csv("../Project/data/cor_prev_fk22_MIR_NCRMP.csv") %>%  left_join(., names_clean, by = "SPECIES_CD") %>%
-  dplyr::rename(PVbar = percent_Bprev) ## change the column name for same code later
-tmp <- read_csv("../Project/data/cor_prev_fk24_MIR_NCRMP.csv") %>% left_join(names_clean, by = "SPECIES_CD") %>%
-  dplyr::rename(PVbar = percent_Bprev) ## change the column name for same code later
-
+tmp <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Ball2_dom.csv") %>% left_join(names_clean, by = "SPECIES_CD")  %>%
+  dplyr::mutate(PVbar = PVbar * 100,
+                PV_UCI = PV_UCI *100,
+                PV_LCI = PV_LCI * 100)
+  
 
 tmp_ble <- full_join(tmp_ble_2022, tmp)
 
@@ -1253,11 +1249,11 @@ plt_bleach_MIR <- tmp_filtered %>%
     pattern_density = .4          # fully patterned
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
-#  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
+ geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = pmin(PV_UCI,100)), position = position_dodge(width = 0.8), width = 0.1, color = "grey20") +
     labs(x = "Bleaching Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
-  scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
+  scale_x_continuous(expand = c(0,0), limits = c(0, 100)) +
   theme_Publication(base_size = 10) +
- coord_cartesian(xlim = c(0, 80), clip = "off") +
+# coord_cartesian(xlim = c(0, 80), clip = "off") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
     theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1284,12 +1280,12 @@ plt_bleach_NCRMP <- tmp_filtered %>%
     pattern_density = .4          # fully patterned
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
- # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
+ geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = pmin(PV_UCI, 100)), position = position_dodge(width = 0.8), width = 0.1, color = "grey20") +
  # facet_wrap(~analysis_group) +
     labs(x = "Bleaching Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
-    scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
+    scale_x_continuous(expand = c(0,0), limits = c(0, 100)) +
         theme_Publication(base_size = 10) +
-  coord_cartesian(xlim = c(0, 80), clip = "off") +
+  #coord_cartesian(xlim = c(0, 100), clip = "on") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
     theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1308,37 +1304,55 @@ plt_bleach_NCRMP <- tmp_filtered %>%
 
 ```{r bleaching, fig.cap = "Figure 7. Species-specific bleaching prevalence estimates (% ± SEM) observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1, echo = FALSE}
 
-# Combine the two plots side-by-side
-final_plot <- (plt_bleach_MIR + plt_bleach_NCRMP) +
-  plot_layout(ncol = 2)  # Ensures side-by-side layout
+#Manually change weird hash marks that occur only in the PDF output
+if (knitr::is_latex_output()) {
+  plt_bleach_NCRMP <- plt_bleach_NCRMP +
+    ggpattern::geom_col_pattern(
+    position = position_dodge(width = 0.8),
+    width = 0.8,
+    fill = "#D55E00",    # background color (used if no pattern)
+    pattern_fill = "white",    # color of the pattern lines (overlay)
+    pattern_spacing = 0.015, #75       # very tight pattern
+    pattern_size = 0.025,            # thin lines
+    pattern_density = .5         # fully patterned
+  )
   
+  plt_bleach_MIR <- plt_bleach_MIR +
+    ggpattern::geom_col_pattern(
+    position = position_dodge(width = 0.8),
+    width = 0.8,
+    fill = "#0072B2",    # background color (used if no pattern)
+    pattern_fill = "white",    # color of the pattern lines (overlay)
+    pattern_spacing = 0.015,        # very tight pattern
+    pattern_size = 0.025,            # thin lines
+    pattern_density = .5          # fully patterned
+  ) 
+}
 
-print(final_plot)
+#Combine Plots
+(final_plot <- (plt_bleach_MIR + plt_bleach_NCRMP) +
+  plot_layout(ncol = 2) )
+
 ```
 
 ### Disease Prevalence 
 
 ```{r disease, echo= FALSE}
 
-# Set path to data files
-MIR_species <- c("ACR PALM", "ACR CERV", "COL NATA", "DEN CYLI", "DIC STOK", "DIP LABY", "EUS FAST", "MEA MEAN", "PSE CLIV", "PSE STRI", "MON CAVE")
+#Read in disease prevalence estimates
+tmp_dis_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Dall2_dom.csv") %>%  left_join(., names_clean, by = "SPECIES_CD") %>%
+  dplyr::mutate(PVbar = PVbar * 100,
+                PV_UCI = PV_UCI *100,
+                PV_LCI = PV_LCI * 100)
+  
+
+tmp_dis_2024 <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Dall2_dom.csv") %>% left_join(names_clean, by = "SPECIES_CD")  %>%
+  dplyr::mutate(PVbar = PVbar * 100,
+                PV_UCI = PV_UCI *100,
+                PV_LCI = PV_LCI * 100)
 
 
-names_clean <- names %>%
-  select(SPECIES_CD, SPECIES_NAME) %>%
-  distinct(SPECIES_CD, .keep_all = TRUE)
-
-#old proportional estimates, will update when new ones come in from Dione
-# tmp_dis_2022 <- read_csv("../Project/data/fk2022_NCRMP_MIR_sppPVbar_Dall_dom.csv") %>%
-#     left_join(names_clean, by = "SPECIES_CD")
-# 
-# tmp_dis_2024 <- read_csv("../Project/data/fk2024_NCRMP_MIR_sppPVbar_Dall_dom.csv") %>%
-#     left_join(names_clean, by = "SPECIES_CD")
-
-#Use prevalence dataset and keep names the same for following code
-tmp_dis <- tmp_ble %>% select(-PVbar) %>% dplyr::rename(PVbar = percent_Dprev)
-
-# tmp_dis <- full_join(tmp_dis_2022, tmp_dis_2024)
+tmp_dis <- full_join(tmp_dis_2022, tmp_dis_2024)
 
 top_species <- tmp_dis %>%
   group_by(SPECIES_CD) %>%
@@ -1381,12 +1395,12 @@ plt_dis_MIR <- tmp_filtered %>%
     pattern_density = .4          
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
- # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
- #               position = position_dodge(width = 0.8), width = 0.1) +
+ geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
+               position = position_dodge(width = 0.8), width = 0.1, color = "grey20") +
     labs(x = "Disease Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
-  coord_cartesian(xlim = c(0, 10), clip = "off") +
+  coord_cartesian(xlim = c(0, 18), clip = "off") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
    theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1413,12 +1427,12 @@ plt_dis_NCRMP <- tmp_filtered %>%
     pattern_density = .4          
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
- # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
- #               position = position_dodge(width = 0.8), width = 0.1) +
+ geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
+                position = position_dodge(width = 0.8), width = 0.1, color = "grey20") +
     labs(x = "Disease Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
-  coord_cartesian(xlim = c(0, 10), clip = "off") +
+  coord_cartesian(xlim = c(0, 15), clip = "off") +
         scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')"))) +
     theme(
           strip.text = element_text(size = 14, face = "bold"),
@@ -1435,11 +1449,33 @@ plt_dis_NCRMP <- tmp_filtered %>%
 ```
 
 ```{r, echo = FALSE, fig.cap = "Figure 8. Species-specific disease prevalence estimates (% ± SEM) observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1}
-
-# Combine the two plots side-by-side
-(final_plot <- (plt_dis_MIR + plt_dis_NCRMP) +
-  plot_layout(ncol = 2))
+#Manually change weird hash marks that occur only in the PDF output
+if (knitr::is_latex_output()) {
+  plt_dis_NCRMP <- plt_dis_NCRMP +
+    ggpattern::geom_col_pattern(
+    position = position_dodge(width = 0.8),
+    width = 0.8,
+    fill = "#D55E00",    # background color (used if no pattern)
+    pattern_fill = "white",    # color of the pattern lines (overlay)
+    pattern_spacing = 0.015, #75       # very tight pattern
+    pattern_size = 0.025,            # thin lines
+    pattern_density = .5        # fully patterned
+  )
   
+  plt_dis_MIR <- plt_dis_MIR +
+    ggpattern::geom_col_pattern(
+    position = position_dodge(width = 0.8),
+    width = 0.8,
+    fill = "#0072B2",    # background color (used if no pattern)
+    pattern_fill = "white",    # color of the pattern lines (overlay)
+    pattern_spacing = 0.015,        # very tight pattern
+    pattern_size = 0.025,            # thin lines
+    pattern_density = .5          # fully patterned
+  ) }
+  
+ #Put the plot together
+   (final_plot <- (plt_dis_MIR + plt_dis_NCRMP) +
+  plot_layout(ncol = 2))
 ```
 
 ## Point of Contact
