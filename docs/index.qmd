@@ -65,7 +65,7 @@ execute:
 
 ## Introduction
 
-[Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, academic, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Horseshoe Reef, Cheeca Rocks, Sombrero Reef, Newfound Harbor, Looe Key, and Eastern Dry Rocks (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% across the seven sites -- an initiative unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
+[Mission: Iconic Reefs](https://www.fisheries.noaa.gov/southeast/habitat-conservation/restoring-seven-iconic-reefs-mission-recover-coral-reefs-florida-keys) (M:IR) is a multi-institutional initiative designed to restore ecological function and biodiversity across key reef sites in the Florida Keys. Led by NOAA in collaboration with federal, state, academic, institutional, and non-profit partners, M:IR targets nearly three million square feet of reef at seven key coral reefs in the Florida Keys National Marine Sanctuary (FKNMS): Carysfort (North and South), Horseshoe Reef, Cheeca Rocks, Sombrero Reef, Newfound Harbor, Looe Key, and Eastern Dry Rocks (Figure 1). Across these reefs, M:IR aims to restore coral cover to an average of 25% within suitable habitats across the seven sites -- an initiative unparalleled in scope and scale that will require hundreds of thousands of coral restoration outplants and over a decade of phased intervention. 
 
 ![Figure 1: Map of the Florida Keys showing the sites of Mission: Iconic Reefs](../Project/images/MIR_Map.png){fig-align="center"}
 
@@ -114,12 +114,13 @@ source("../Project/R Scripts/dis_ble_prev_ratio_est.R")
 
 ```{r MIR species, echo = FALSE}
 MIR_species <- c( "ACR CERV", "ACR PALM", "COL NATA", "DEN CYLI",
-                    "DIC STOK", "DIP LABY", "EUS_ AST", "MEA MEAN",
+                    "DIC STOK", "DIP LABY", "EUS_ AST", "MEA MEAN", 
+                    "ORB ANNU", "ORB FAVE", "ORB FRAN", 
                     "PSE CLIV", "PSE STRI", "MON CAVE" )
 
 ```
 
-Corals and benthic communities were monitored using two different NCRMP surveys: the Benthic Community Assessment survey and the Coral Demographics survey (NOAA CRCP 2022a, 2022b, 2024a, 2024b). The Benthic Community Assessment survey includes: 1) benthic cover (%) estimates along a 15-m transect with a line point intercept method, 2) presence/absence of Endangered Species Act (ESA)-listed coral species [@NMFS2014], 3) abundance of key macroinvertebrates, and 4) reef rugosity measurements within a 15 m x 2 m belt-transect area (NOAA CRCP 2022a, 2024b). At the same site, coral demographics were surveyed within a 10 m x 1 m belt-transect area (NOAA CRCP 2022b, 2024b). NCRMP coral demographic survey data were combined with complementarily allocated survey data from Florida Fish and Wildlife Conservation Commission’s Disturbance Response Monitoring ([DRM](https://coraldrm.org/)) program, which has been collecting coral demographic data focused on coral bleaching and disease since 2005. The NCRMP and DRM programs collaborate by using the same sampling grid and conducting complementary coral demographics surveys, increasing the sample size and spatial coverage in Florida. In all coral demographics surveys, all live coral colonies ≧ 4 cm were counted, identified to species, measured to the nearest centimeter, and estimates were made of the proportion per colony of any present mortality (recent or old), disease (absent, present: slow, fast), and/or bleaching (none, total, partial, paling). Only live coral colonies were included in the survey; dead colonies with 100% mortality were not surveyed (e.g., colonies killed by coral disease). Juvenile corals (\< 4 cm) were reported for species richness only and were not included in counts, size measurements, or estimates of condition (NOAA CRCP 2022b); in 2024, juveniles of select coral species were counted (NOAA CRCP 2024b). In 2024, NCRMP benthic surveys also included large area imaging (LAI) collected at most survey sites; analyses of these LAI data are in progress and not presented here.
+Corals and benthic communities were monitored using two different NCRMP surveys: the Benthic Community Assessment survey and the Coral Demographics survey (NOAA CRCP 2022a, 2022b, 2024a, 2024b). The Benthic Community Assessment survey includes: 1) benthic cover (%) estimates along a 15 m transect with a line point intercept method, 2) presence/absence of Endangered Species Act (ESA)-listed coral species [@NMFS2014], 3) abundance of key macroinvertebrates, and 4) reef rugosity measurements within a 15 m x 2 m belt-transect area (NOAA CRCP 2022a, 2024b). At the same site, coral demographics were surveyed within a 10 m x 1 m belt-transect area (NOAA CRCP 2022b, 2024b). NCRMP coral demographic survey data were combined with complementarily allocated survey data from Florida Fish and Wildlife Conservation Commission’s Disturbance Response Monitoring ([DRM](https://coraldrm.org/)) program, which has been collecting coral demographic data focused on coral bleaching and disease since 2005. The NCRMP and DRM programs collaborate by using the same sampling grid and conducting complementary coral demographics surveys, increasing the sample size and spatial coverage in Florida. In all coral demographics surveys, all live coral colonies less than 4 cm were counted, identified to species, measured to the nearest centimeter, and estimates were made of the proportion per colony of any present mortality (recent or old), disease (absent, present: slow, fast), and/or bleaching (none, total, partial, paling). Only live coral colonies were included in the survey; dead colonies with 100% mortality were not surveyed (e.g., colonies killed by coral disease). Juvenile corals (\< 4 cm) were reported for species richness only and were not included in counts, size measurements, or estimates of condition (NOAA CRCP 2022b); in 2024, juveniles of select coral species were counted (NOAA CRCP 2024b). In 2024, NCRMP benthic surveys also included large area imaging (LAI) collected at most survey sites; analyses of these LAI data are in progress and not presented here.
 
 ## Data Analyses
 
@@ -144,7 +145,7 @@ Table 1. Number of demographic (Demo) and benthic community assessment (BCA) sur
   #for pdf, using a photo of the table from excel instead because format is very messy
   cat("\\begin{center}\n")
   #changing the table caption to be more similar to html, with light coloring and cnetering
-  cat("\\textcolor{darkgray}{\\textbf{Table 1.} Number of demographic (Demo) and benthic community assessment (BCA) surveys completed by M:IR, NCRMP, and DRM in 2022 and 2024.}\n\n")
+  cat("\\textcolor{black}{\\textbf{Table 1.} Number of demographic (Demo) and benthic community assessment (BCA) surveys completed by M:IR, NCRMP, and DRM in 2022 and 2024.}\n\n")
   #this is the photo of the table
   cat("\\includegraphics[width=\\linewidth]{../Project/images/Proper_Table.png}\n")
   #this centers the photo
@@ -242,7 +243,7 @@ sjPlot::tab_df(
     TRUE ~ `Study area`##PDF doesn't accept break
   )) 
   # Styled caption printed manually before the table
-  cat("\\textcolor{darkgray}{\\textbf{Table 2.} The number of coral demographic sites sampled inside and outside M:IR areas in each stratum (includes DRM data).}\n")
+  cat("\\textcolor{black}{\\textbf{Table 2.} The number of coral demographic sites sampled inside and outside M:IR areas in each stratum (includes DRM data).}\n")
   # Print the table with kableExtra
   kableExtra::kbl(
     table_2,
@@ -287,7 +288,7 @@ sjPlot::tab_df(
   ######### PDF VERSION ###########
 } else if (knitr::is_latex_output()) {
      # Manually print a styled caption with label BEFORE the table
-  cat("\\textcolor{darkgray}{\\textbf{Table 3.} Number of Benthic Community Assessment (BCA) sites sampled inside and outside M:IR areas in each stratum.}\n")
+  cat("\\textcolor{black}{\\textbf{Table 3.} Number of Benthic Community Assessment (BCA) sites sampled inside and outside M:IR areas in each stratum.}\n")
   # Print the table itself in kableExtra
   kableExtra::kbl(
     table,
@@ -485,7 +486,7 @@ if (knitr::is_latex_output()) {
 
 ## Coral Demography
 
-Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR's goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites. Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).
+Although several metrics reported here encompass all observed coral species, ten focal species are highlighted as particularly important to M:IR's goal: *Acropora palmata*, *Acropora cervicornis*, *Colpophyllia natans*, *Dendrogyra cylindrus*, *Dichocoenia stokesii*, *Diploria labyrinthiformis*, *Orbicella annularis*, *Orbicella faveolata*, *Orbicella franski*, *Meandrina meandrites*, *Montastraea cavernosa*, *Pseudodiploria clivosa*, and *Pseudodiploria strigosa*. These species have experienced drastic population declines and are targeted for restoration at the M:IR sites. Specifically, most were severely affected by White Band Disease (*Acropora* spp.) or Stony Coral Tissue Loss Disease (SCTLD).
 
 The following table summarizes the number of observations across all strata and survey years of each focal species and identifies the most abundant species encountered.
 
@@ -507,6 +508,7 @@ top <- df %>% ungroup() %>% dplyr::slice(1:15)
 ##MIR Species
 target_species <- c("ACR PALM", "ACR CERV", "COL NATA", "DEN CYLI",
   "DIC STOK", "DIP LABY", "EUS_ AST", "MEA MEAN",
+  "ORB ANNU", "ORB FAVE", "ORB FRAN", 
   "PSE CLIV", "PSE STRI", "MON CAVE")
 
 MIR <- df %>% filter(
@@ -561,7 +563,7 @@ CSS = list(
   final <- final %>% mutate(SPECIES_NAME = gsub("</?i>", "", SPECIES_NAME))
 
   # Custom caption printed manually above the table
-cat("\\textcolor{darkgray}{\\textbf{Table 4.} Number of colonies observed for focal M:IR species and the most commonly encountered non-focal species in 2022 and 2024.}\n\n")
+cat("\\textcolor{black}{\\textbf{Table 4.} Number of colonies observed for focal M:IR species and the most commonly encountered non-focal species in 2022 and 2024.}\n\n")
 
 
   # Render table with kableExtra
@@ -587,7 +589,7 @@ cat("\\textcolor{darkgray}{\\textbf{Table 4.} Number of colonies observed for fo
 
 The stratified random surveys are designed to optimize sampling efficiency and provide high precision estimates of coral population metrics at relatively low sample sizes [@Smith2011].  The effectiveness of restoration can be quantified by comparison of these metrics between M:IR sites and similar habitats outside these restoration areas. 
 
-The following figures for these metrics are grouped by each focal species. Significant statistical differences using a two-tailed t-test are indicated for differences between survey years (2022 vs. 2024) and between areas (M:IR vs. NCRMP) for density, old mortality, and mean colony size.
+The following figures for these metrics are grouped by each focal species. Significant statistical differences using a two-tailed t-test are indicated for differences between survey years (2022 vs. 2024) and between areas (M:IR vs. NCRMP) for density, old mortality, and mean colony size. The size frequency figures illustrate the relative distribution of size classes for each species, providing insight into the population structure. Comparisons among size classes across years can reveal changes in demographic processes, such as growth, recruitment, and survival. In general, coral populations are expected to be dominated by smaller, younger colonies, with progressively fewer individuals observed in each larger size class. 
 
 ```{r prep density data, fig.width=12, fig.asp=0.6, echo = FALSE}
 
@@ -925,10 +927,10 @@ plt3 <- plt3 +
   plt4 <- ggplot(data = domain_sub, 
                  aes(x = as.integer(bin_num), y = length_freq_domain, fill = analysis_group)) +
     geom_bar(stat = "identity", position = "dodge2", width = 0.9, color = "black", size = 0.5) +
-    geom_point(aes(y = oldmort_domain, color = analysis_group), size = 2) +
-    geom_line(aes(y = oldmort_domain, color = analysis_group), size = 2, alpha = 0.5) +
+   # geom_point(aes(y = oldmort_domain, color = analysis_group), size = 2) + #old mortality removed
+   # geom_line(aes(y = oldmort_domain, color = analysis_group), size = 2, alpha = 0.5) + #old mortality removed
     facet_wrap(~YEAR) +
-    labs(y = "Frequency (Size Class & Mortality)", x = "Maximum Diameter (cm)") +
+    labs(y = "Relative Frequency", x = "Maximum Diameter (cm)") +
     scale_x_continuous(breaks = seq_along(lab_vec), labels = lab_vec) +
     scale_fill_manual(values = c("#0072B2", "#D55E00"), labels = c("M:IR", "NCRMP + DRM")) +
     scale_color_manual(values = c("#0072B2", "#D55E00"), guide = "none") +
@@ -958,6 +960,9 @@ species_images <- list(
   "Dichocoenia stokesii" = list(path = "../Project/coral_image_files/dic_stok.jpg", type = "jpg"),
   "Diploria labyrinthiformis" = list(path = "../Project/coral_image_files/dip_laby.jpg", type = "jpg"),
   "Meandrina meandrites" = list(path = "../Project/coral_image_files/mea_mean.jpg", type = "jpg"),
+  "Orbicella annularis" = list(path = "../Project/coral_image_files/orb_annu.png", type = "png"),
+  "Orbicella faveolata" = list(path = "../Project/coral_image_files/orb_fave.jpg", type = "jpg"),
+  "Orbicella franksi" = list(path = "../Project/coral_image_files/orb_fran.png", type = "png"),
   "Pseudodiploria clivosa" = list(path = "../Project/coral_image_files/pse_cliv.png", type = "png"),
   "Pseudodiploria strigosa" = list(path = "../Project/coral_image_files/pse_stri.png", type = "png"),
   "Montastraea cavernosa" = list(path = "../Project/coral_image_files/mon_cave.jpg", type = "jpg"),
@@ -987,7 +992,7 @@ final_plot <- (image_plot/
     middle_annotation /
     plt4
 ) +
-  plot_layout(heights = c(1, 1, 0.1, 1.4)) +
+  plot_layout(heights = c(1, 1, 0.15, 1.4)) +
     
   
   plot_annotation(
@@ -1058,7 +1063,7 @@ cat(":::\n")
 
 ### Coral Density
 
-```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colonies/m<sup>2</sup>) ± SEM outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Density,  fig.cap = "Figure 4. Species-specific coral density (colonies/m<sup>2</sup>) ± SEM outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.05, echo = FALSE}
 ###Adding species names and starring MIR species
 a <- left_join(a, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
@@ -1072,8 +1077,8 @@ a <- a %>%
 
   plt1 <- a %>%  
     ggplot(aes(x = avDen, y = SPECIES_NAME, group = interaction(SPECIES_CD, analysis_group), color = analysis_group)) +
-    geom_point(	position = position_dodge(width = 0.3)) + 
-    geom_errorbar(aes(xmin = avDen - SE_avDen, xmax = avDen + SE_avDen), width = 0.1, 	position = position_dodge(width = 0.3)) +
+    geom_point(position = position_dodge(width = 0.35), size =2.8) + 
+    geom_errorbar(aes(xmin = avDen - SE_avDen, xmax = avDen + SE_avDen), width = 0.2, 	position = position_dodge(width = 0.35)) +
     labs(y = "Species", x = expression(bold("Mean Density (col/m"^2*")"))) +
     theme_Publication(base_size = 10) +
     facet_grid(~YEAR) +
@@ -1092,14 +1097,13 @@ a <- a %>%
     ) 
   
   
-  
   print(plt1)
 
 ```
 
 ### Old Mortality
 
-```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality ± SEM by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Old_Mort, fig.cap = "Figure 5. Percent old mortality ± SEM by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.05, echo = FALSE}
 ###Adding species names and starring MIR species
 b <- left_join(b, names %>% distinct(), by = "SPECIES_CD") %>%
    dplyr::mutate(SPECIES_NAME = case_when(
@@ -1113,9 +1117,9 @@ b <- b %>%
 
   plt1 <- b %>%  
     ggplot(aes(x = avMortOld, y = SPECIES_NAME, group = interaction(SPECIES_CD, analysis_group), color = analysis_group)) +
-    geom_point(	position = position_dodge(width = 0.3)) + 
+    geom_point(	position = position_dodge(width = 0.35), size = 2.8) + 
     scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')")))+
-    geom_errorbar(aes(xmin = avMortOld - SE_avMortOld, xmax = avMortOld + SE_avMortOld), width = 0.1, 	position = position_dodge(width = 0.3)) +
+    geom_errorbar(aes(xmin = avMortOld - SE_avMortOld, xmax = avMortOld + SE_avMortOld), width = 0.2, 	position = position_dodge(width = 0.35)) +
     labs(y = "Species", x = "Mean Old Mortality (%)") +
     theme_Publication(base_size = 10) +
     facet_grid(~YEAR) +
@@ -1139,7 +1143,7 @@ b <- b %>%
 
 ### Colony Size
 
-```{r overall Max_Dim, fig.cap = "Figure 6. Colony size (maximum diameter (cm)) ± SEM by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.1, echo = FALSE}
+```{r overall Max_Dim, fig.cap = "Figure 6. Colony size (maximum diameter (cm) ± SEM by coral species outside (NCRMP + DRM) and inside M:IR areas in 2022 and 2024. Focal M:IR species are denoted with a (*).", fig.width=9, fig.asp=1.05, echo = FALSE}
 
 spec_unq <- unique(b$SPECIES_CD)
 
@@ -1160,9 +1164,9 @@ c <- c %>% filter(SPECIES_CD %in% spec_unq)
 
   plt1 <- c %>%  
     ggplot(aes(x = avMaxdiam, y = SPECIES_NAME, group = interaction(SPECIES_CD, analysis_group), color = analysis_group)) +
-    geom_point(	position = position_dodge(width = 0.3)) + 
+    geom_point(	position = position_dodge(width = 0.35), size = 2.8) + 
     scale_y_discrete(labels = function(x) parse(text = paste0("italic('", x, "')")))+
-    geom_errorbar(aes(xmin = avMaxdiam - SE_maxdiam, xmax = avMaxdiam + SE_maxdiam), width = 0.1, 	position = position_dodge(width = 0.3)) +
+    geom_errorbar(aes(xmin = avMaxdiam - SE_maxdiam, xmax = avMaxdiam + SE_maxdiam), width = 0.2, 	position = position_dodge(width = 0.35)) +
     labs(y = "Species", x = "Mean Maximum Diameter (cm)") +
     theme_Publication(base_size = 10) +
     facet_grid(~YEAR) +
@@ -1185,7 +1189,7 @@ c <- c %>% filter(SPECIES_CD %in% spec_unq)
 
 ```
 
-### Bleaching Estimates
+### Bleaching Prevalence 
 
 ```{r  bleaching setup, echo = FALSE}
 MIR_species <- c("ACR PALM", "ACR CERV", "COL NATA", "DEN CYLI", "DIC STOK", "DIP LABY", "EUS FAST", "MEA MEAN", "PSE CLIV", "PSE STRI", "MON CAVE")
@@ -1250,7 +1254,7 @@ plt_bleach_MIR <- tmp_filtered %>%
   ) +
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
 #  geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Bleaching Prevalence (%)", y = "Species", fill = "", pattern = "") +
+    labs(x = "Bleaching Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
   scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
   theme_Publication(base_size = 10) +
  coord_cartesian(xlim = c(0, 80), clip = "off") +
@@ -1282,7 +1286,7 @@ plt_bleach_NCRMP <- tmp_filtered %>%
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
  # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI), position = position_dodge(width = 0.8), width = 0.1) +
  # facet_wrap(~analysis_group) +
-    labs(x = "Bleaching Prevalence (%)", y = "Species", fill = "", pattern = "") +
+    labs(x = "Bleaching Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
   coord_cartesian(xlim = c(0, 80), clip = "off") +
@@ -1302,7 +1306,7 @@ plt_bleach_NCRMP <- tmp_filtered %>%
 
 ```
 
-```{r bleaching, fig.cap = "Figure 7. Species-specific bleaching frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1, echo = FALSE}
+```{r bleaching, fig.cap = "Figure 7. Species-specific bleaching prevalence estimates (% ± SEM) observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1, echo = FALSE}
 
 # Combine the two plots side-by-side
 final_plot <- (plt_bleach_MIR + plt_bleach_NCRMP) +
@@ -1312,7 +1316,7 @@ final_plot <- (plt_bleach_MIR + plt_bleach_NCRMP) +
 print(final_plot)
 ```
 
-### Disease Estimates
+### Disease Prevalence 
 
 ```{r disease, echo= FALSE}
 
@@ -1379,7 +1383,7 @@ plt_dis_MIR <- tmp_filtered %>%
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
  # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
  #               position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Disease Prevalence", y = "Species", fill = "", pattern = "") +
+    labs(x = "Disease Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
   coord_cartesian(xlim = c(0, 10), clip = "off") +
@@ -1411,7 +1415,7 @@ plt_dis_NCRMP <- tmp_filtered %>%
  scale_pattern_manual(values = c("2022" = "none", "2024" = "stripe")) +
  # geom_errorbar(aes(xmin = pmax(PV_LCI, 0), xmax = PV_UCI),
  #               position = position_dodge(width = 0.8), width = 0.1) +
-    labs(x = "Disease Prevalence", y = "Species", fill = "", pattern = "") +
+    labs(x = "Disease Prevalence Estimates (%)", y = "Species", fill = "", pattern = "") +
     scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
         theme_Publication(base_size = 10) +
   coord_cartesian(xlim = c(0, 10), clip = "off") +
@@ -1430,7 +1434,7 @@ plt_dis_NCRMP <- tmp_filtered %>%
   ggtitle("NCRMP + DRM")
 ```
 
-```{r, echo = FALSE, fig.cap = "Figure 8. Species-specific disease frequency observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1}
+```{r, echo = FALSE, fig.cap = "Figure 8. Species-specific disease prevalence estimates (% ± SEM) observed outside (NCRMP + DRM) and inside M:IR areas. Focal M:IR species are denoted with a (*).", fig.width=10, fig.asp=1.1}
 
 # Combine the two plots side-by-side
 (final_plot <- (plt_dis_MIR + plt_dis_NCRMP) +

@@ -271,7 +271,7 @@ paste("MORALITY NOW")
       DEPTH_M = mean(MAX_DEPTH, na.rm = TRUE),
       .groups = "drop"
     )
-  view(AR_size)
+
 
 
   # size_site <- df %>%
